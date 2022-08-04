@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+    <!-- Employee View -->
+        <record id="inherit_hr_appraisal_view_form" model="ir.ui.view">
+            <field name="name">hr.employee.view.form.inherit.appraisal yuko</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_appraisal.hr_employee_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[2]" position="attributes">
+                    <attribute name="groups">hr_appraisal.group_hr_appraisal_user</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>

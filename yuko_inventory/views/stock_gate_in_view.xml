@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem name="Stock Gate In" id="stock_gate_in.stock_gate_in_menu" parent="stock.menu_stock_root"
+                    groups="stock.group_stock_user,stock.group_stock_manager,yuko_inventory.group_yuko_admin_user,yuko_inventory.group_yuko_security"/>
+        <menuitem name="Gate In" id="stock_gate_in.stock_gate_in_sub_menu" parent="stock_gate_in.stock_gate_in_menu" sequence="5"
+                  action="stock_gate_in.stock_gate_in_action_window"
+                  groups="stock.group_stock_user,stock.group_stock_manager,yuko_inventory.group_yuko_admin_user,yuko_inventory.group_yuko_security"/>
+
+        <record id="inherit_stock_gate_in_form_view" model="ir.ui.view">
+            <field name="name">stock.gate.in.form.view</field>
+            <field name="model">stock.gate.in</field>
+            <field name="inherit_id" ref="stock_gate_in.stock_gate_in_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_confirm']" position="replace">
+                    <button string="Confirm" name="action_confirm" states="draft" type="object" class="oe_highlight" groups="yuko_inventory.group_yuko_admin_user,stock.group_stock_user"/>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm']" position="after">
+                    <button string="Receive" name="action_receive" states="confirm" type="object" class="oe_highlight" groups="yuko_inventory.group_yuko_security"/>
+                    <button string="Done" name="action_done" states="receive" type="object" class="oe_highlight" groups="stock.group_stock_user"/>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm,receive,done"/>
+                </xpath>
+                <xpath expr="//group/group/field[@name='partner_id']" position="replace">
+                    <field name="partner_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]" options="{'no_open': True, 'no_create': True}"/>
+                    <field name="supplier_phone"/>
+                    <field name="attention_id" options="{'no_open': True, 'no_create': True}"/>
+                </xpath>
+                <xpath expr="//group/group/field[@name='date']" position="before">
+                    <field name="responsible"/>
+                    <field name="receive_type" placeholder="Please Select"/>
+                </xpath>
+                <xpath expr="//group/group/field[@name='date']" position="replace">
+                    <field name="entry_date"/>
+                    <field name="reference_in"/>
+                    <field name="gate_type" placeholder="Please Select"/>
+                    <field name="gate_passno" attrs="{'invisible': [('gate_type','!=','returnable')]}" options="{'no_open': True, 'no_create': True}"/>
+                </xpath>
+                <xpath expr="//group/group/field[@name='create_by']" position="after">
+                    <field name="carried_phone"/>
+                </xpath>
+                <xpath expr="//group/group/field[@name='received']" position="replace">
+                </xpath>
+                <xpath expr="//notebook/page[1]" position="before">
+                    <page string="Products">
+                        <field name="stock_line_ids">
+                            <tree string="Product Lines" editable="bottom">
+                                <field name="product_id" options="{'no_open': True, 'no_create': True}"/>
+                                <field name="name"/>
+                                <field name="product_qty"/>
+                                <field name="product_uom"/>
+                                <field name="state" invisible="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

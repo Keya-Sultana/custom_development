@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <report
+                id="hr_employee_exit.action_report_employee_clearance"
+                model="hr.emp.exit.req"
+                string="Employee Clearance"
+                report_type="qweb-pdf"
+                name="hr_employee_exit.report_employee_clearance"
+                file="hr_employee_exit.report_employee_clearance"
+                paperformat="report_layout.paperformat_backend_portrait"
+                menu="False"
+        />
+
+		<!-- Definition of the report -->
+		<report
+                id="action_employee_clearance_report"
+                model="hr.emp.exit.req"
+                string="Employee Clearance"
+                report_type="qweb-pdf"
+                name="yuko_hr_employee_exit.report_employee_clearance_qweb"
+                file="yuko_hr_employee_exit.report_employee_clearance_qweb"
+        />
+
+		<!-- Main template -->
+		<template id="report_employee_clearance_qweb">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+				<t t-call="yuko_report_layout.external_layout">
+					<div class="page" style="page-break-inside:auto">
+                        <div class="row" style="padding-top:5px;">
+                            <style type="text/css">
+                                .report-title { text-align:center; }
+                                .odo-bg-gray, .odo-bg-gray > td { background-color: #f5f5f5; }
+                            </style>
+                            <div class="clearfix">
+                                <h3 class="report-title">Employee Clearance Form</h3>
+                                <br/>
+
+                                <h4>Employee Details</h4>
+                                <div class="row">
+                                    <div class="col-xs-8 text-left">
+                                        <h6><b>Employee Name :  </b><span t-esc="o.employee_id.name"/></h6>
+                                        <h6><b>Department :  </b><span t-esc="o.department_id.name"/></h6>
+                                        <h6><b>Job Title :  </b><span t-esc="o.job_id.name"/></h6>
+                                        <h6><b>Employee code :  </b><span t-esc="o.employee_id.device_employee_acc"/></h6>
+                                    </div>
+                                    <div class="col-xs-4 text-left">
+                                        <h6><b>Date of Joining :  </b><span t-esc="o.employee_id.initial_employment_date"  t-options='{"widget": "date"}'/></h6>
+                                        <h6><b>Date of Resignation :  </b><span t-esc="o.req_date" t-options='{"widget": "date"}'/></h6>
+                                        <h6><b>Date of Leaving :  </b><span t-esc="o.last_date" t-options='{"widget": "date"}'/></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <table class="table table-bordered table-striped">
+									<thead>
+										<tr class="odo-bg-gray">
+											<th>Checklist Item</th>
+											<th>Responsible Department</th>
+                                            <th>Responsible User</th>
+											<th>Remarks</th>
+											<th>State</th>
+											<th>Signature</th>
+										</tr>
+									</thead>
+									<tbody>
+                                    <t t-foreach="o.checklists_ids" t-as="l">
+                                        <tr style="page-break-inside: avoid">
+                                            <td><span t-field="l.checklist_item_id"/></td>
+											<td><span t-field="l.responsible_department"/></td>
+											<td><span t-field="l.responsible_emp"/></td>
+											<td><span t-field="l.remarks"/></td>
+											<td><span t-field="l.state"/></td>
+                                            <td></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+								</table>
+
+                        </div>
+                        <br/>
+                        <div class="row">
+                        <div class="col-xs-8 text-left">
+                        <span class="signed-by"><b>Employee Signature and Date : </b></span>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <p>-------------------------------------------</p>
+                        </div>
+                        <div class="col-xs-4 text-left" style="padding-left:35px;">
+                        <span class="signed-by"><b>HR Signature and Date : </b></span>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <p>-------------------------------------------</p>
+                        </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-xs-8 text-left">
+                        <span class="signed-by"><b>Reporting Signature and Date : </b></span>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <p>-------------------------------------------</p>
+                        </div>
+                        <div class="col-xs-4 text-left" style="padding-left:35px;">
+                        <span class="signed-by"><b>Accounte Signature and Date : </b></span>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <p>-------------------------------------------</p>
+                        </div>
+                        </div>
+                    </div>
+				</t>
+				</t>
+			</t>
+		</template>
+
+
+	</data>
+</odoo>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+		<!-- Definition of the report -->
+		<report id="report_yuko_matermity"
+				model="hr.payslip"
+				string="Maternity Benefit Bill"
+				name="yuko_maternity_report.report_yuko_matermity_qweb"
+				file="yuko_maternity_report.report_yuko_matermity_qweb"
+				report_type="qweb-pdf"
+                menu="False"
+        />
+
+		<!-- Main template -->
+		<template id="report_yuko_matermity_qweb">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+				<t t-call="yuko_report_layout.external_layout">
+					<div class="page">
+                        <div class="row">
+                            <style type="text/css">
+                                .report-title { text-align:center; }
+                                .odo-bg-gray, .odo-bg-gray > td { background-color: #B4FDF0; }
+                            </style>
+                            <div class="clearfix">
+                                <h3 class="report-title" style="text-decoration: underline; margin-top:30px; margin-bottom:30px;">Maternity Benefit Bill(168 Days)</h3>
+                            </div>
+
+
+                            <table class="table table-condensed table-bordered">
+                                <tr>
+                                    <td><strong>Name:</strong></td>
+                                    <td style="width:25%;"><span t-field="o.employee_id.name"/></td>
+                                    <td style="width:15%;"></td>
+                                    <td><strong>Date:</strong></td>
+                                    <td style="width:20%;"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>ID:</strong></td>
+                                    <td style="width:25%;"><span t-field="o.employee_id.identification_id"/></td>
+                                    <td style="width:15%;"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Designation:</strong></td>
+                                    <td style="width:25%;"><span t-field="o.employee_id.job_id.name"/></td>
+                                    <td style="width:15%;"></td>
+                                    <td><strong>Gross Wages:</strong></td>
+                                    <td style="width:20%;"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Section:</strong></td>
+                                    <td style="width:25%;"><span t-field="o.employee_id.department_id.name"/></td>
+                                    <td style="width:15%;"></td>
+                                    <td><strong>Total Days:</strong></td>
+                                    <td style="width:20%;"><span t-field="o.employee_id.remaining_leaves"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Department:</strong></td>
+                                    <td style="width:25%;"><span t-field="o.employee_id.department_id.name"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Date of Join:</strong></td>
+                                    <td style="width:25%;"><span t-field="o.employee_id.initial_employment_date"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Leaves Duration:</strong></td>
+                                    <td style="width:25%;"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Joining Date After Leaves:</strong></td>
+                                    <td style="width:25%;"></td>
+                                </tr>
+                            </table><br/>
+
+                            <p style="text-decoration: underline;"><strong>Previous 3 month Actual Earned</strong></p>
+                            <table class="table table-bordered table-report-xs table-striped"
+                                        style="margin-bottom: 10px; table-layout: fixed;">
+								<thead>
+									<tr style="background-color:#B4FDF0;
+												border-bottom: 1px solid #030303;">
+                                        <th class="text-center" style="width:6%;">S/L No</th>
+                                        <th class="text-center" >Month Name</th>
+                                        <th class="text-center" style="width:10%;">Wages</th>
+                                        <th class="text-center" style="width:10%;">Pay Days</th>
+                                        <th class="text-center" style="width:10%;">Attendance Bonus</th>
+                                        <th class="text-center" style="width:8%;">OT</th>
+                                        <th class="text-center" style="width:8%;">PF Deduction</th>
+                                        <th class="text-center" style="width:8%;">Total</th>
+                                        <th class="text-center" style="width:20%;">Total Working Days</th>
+									</tr>
+								</thead>
+								<tbody>
+                                    <tr>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"></td>
+
+                                        <td class="text-center">
+
+                                        </td>
+                                    </tr>
+
+								</tbody>
+							</table>
+
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td style="border: 1px solid black"><strong>Previous 3(Three) Months Actual Earn   =</strong></td>
+                                    <td style="border: 1px solid black; width:15%;"></td>
+                                    <td style="border: 1px solid black; width:10%;"><strong>TK</strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid black"><strong>Previous 3(Three) Months Actual Working Days   =</strong></td>
+                                    <td style="border: 1px solid black; width:15%;"></td>
+                                    <td style="border: 1px solid black; width:10%;"><strong></strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid black"><strong>Previous 3(Three) Months Average Actual Earn Per Day  =</strong></td>
+                                    <td style="border: 1px solid black; width:15%;"></td>
+                                    <td style="border: 1px solid black; width:10%;"><strong>TK</strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid black"><strong>Maternity Benefit of 6(Six) Months(Average Actual Earn *168(12+12 = 24 Weeks))  =</strong></td>
+                                    <td style="border: 1px solid black; width:15%;"></td>
+                                    <td style="border: 1px solid black; width:10%;"><strong>TK</strong></td>
+                                </tr>
+                            </table><br/>
+
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td style="border: 1px solid black;"><strong>Maternity Benefit Before Leave =</strong></td>
+                                    <td style="border: 1px solid black; width:15%;"></td>
+                                    <td style="border: 1px solid black; width:10%;">TK</td>
+                                    <td style="border: 1px solid black; width:25%;">Signature:</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid black;"><strong>Total =</strong></td>
+                                    <td style="border: 1px solid black; width:15%;"></td>
+                                    <td style="border: 1px solid black; width:10%;">TK</td>
+                                </tr>
+                            </table><br/>
+
+                            <strong>Taka In Word:  </strong>
+
+                            <div class="row mb32" style="margin-top: 13mm;">
+                                <div class="col-xs-4 text-center">
+                                    <strong style="border-top: 1px solid black; padding-top:5px;">HR &amp; Admin Department</strong>
+                                </div>
+                                <div class="col-xs-4 text-center">
+                                    <strong style="border-top: 1px solid black; padding-top:5px;">Accounts Department</strong>
+                                </div>
+                                <div class="col-xs-4 text-center">
+                                    <strong style="border-top: 1px solid black; padding-top:5px;">Factory Department</strong>
+                                </div>
+                            </div>
+
+                        </div>
+
+					</div>
+				</t>
+				</t>
+			</t>
+		</template>
+
+
+	</data>
+</odoo>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<data>
+		<menuitem id="hr_employee_iou.hr_emp_iou" name="Employee IOU" parent="hr.menu_hr_root"
+				  groups="gbs_hr_security.group_payroll_user,base.group_user,gbs_application_group.group_dept_manager,yuko_employee_iou.group_audit,yuko_employee_iou.group_account_adviser"/>
+
+		<menuitem id="hr_employee_iou.hr_emp_iou_menu_item" name="Employee IOU" parent="hr_employee_iou.hr_emp_iou" action="hr_employee_iou.action_hr_employee_iou"
+				  groups="gbs_hr_security.group_payroll_user,base.group_user,gbs_application_group.group_dept_manager,yuko_employee_iou.group_audit,yuko_employee_iou.group_account_adviser"/>
+
+		<!-- Form View-->
+		<record id="inherit_employee_iou_tree" model="ir.ui.view">
+			<field name="name">hr.employee.iou.tree</field>
+			<field name="model">hr.employee.iou</field>
+			<field name="inherit_id" ref="hr_employee_iou.employee_iou_tree"/>
+		    <field name="arch" type="xml">
+				<xpath expr="//tree/field[@name='employee_id']" position="before">
+					<field name="name" />
+				</xpath>
+			</field>
+		</record>
+
+		<!-- Sequence-->
+
+        <record id="employee_iou_seq" model="ir.sequence">
+            <field name="name">Employee IOU</field>
+            <field name="code">hr.employee.iou</field>
+            <field name="prefix">IOU</field>
+            <field eval="4" name="padding" />
+        </record>
+
+		<!-- Form View-->
+		<record id="inherit_employee_iou_form" model="ir.ui.view">
+			<field name="name">hr.employee.iou.form1</field>
+			<field name="model">hr.employee.iou</field>
+			<field name="inherit_id" ref="hr_employee_iou.employee_iou_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//header/button[@name='action_confirm']" position="replace">
+					<button string="Confirm" name="action_confirm" states="draft" type="object" class="oe_highlight"/>
+                </xpath>
+
+				<xpath expr="//header/button[@name='%(hr_employee_iou.action_employee_iou_wizard)d']" position="replace">
+					<button string="Repay" states="disbursed"
+							groups="yuko_employee_iou.group_account_adviser" name="%(hr_employee_iou.action_employee_iou_wizard)d" type="action" class="oe_highlight"/>
+                </xpath>
+
+				<xpath expr="//header/button[@name='%(hr_employee_iou.action_employee_iou_wizard)d']" position="before">
+					<button name="action_approve_by_manager" string="Approve1" states="confirm" type="object" class="oe_highlight" groups="gbs_application_group.group_dept_manager"/>
+					<button name="action_approve_by_audit" string="Approve2" states="department_managers" type="object" class="oe_highlight" groups="yuko_employee_iou.group_audit"/>
+					<button name="action_approve_by_management" string="Approve3" states="audit" type="object" class="oe_highlight" groups="yuko_employee_iou.group_management"/>
+					<button name="action_disbursed" string="Disburse" states="management" type="object" class="oe_highlight" groups="yuko_employee_iou.group_account_adviser"/>
+					<button name="action_reject" string="Reject" states="confirm,department_managers,audit,management" type="object" class="oe_highlight"
+						groups="gbs_application_group.group_dept_manager,yuko_employee_iou.group_audit,yuko_employee_iou.group_management,yuko_employee_iou.group_account_adviser"/>
+                </xpath>
+
+				<xpath expr="//sheet/group" position="replace">
+					<div>
+                          <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                      </div>
+					<group>
+						<group>
+							<field name="employee_id" attrs="{'readonly':[('state','=','confirm')]}"
+								   options='{"no_open": True,"no_create": 1, "no_create_edit": 1}'/>
+                            <field name="amount" attrs="{'readonly':[('state','=','confirm')]}"/>
+                            <field name="due"/>
+						</group>
+						<group>
+							<field name="create_date"/>
+							<field name="adjustment_date" attrs="{'readonly':[('state','!=','disbursed')]}"/>
+							<field name="manager_id" string="Department Manager" readonly="1"/>
+							<field name="purpose_iou"/>
+						</group>
+					</group>
+                </xpath>
+
+
+			</field>
+		</record>
+
+		
+	</data>
+</odoo>

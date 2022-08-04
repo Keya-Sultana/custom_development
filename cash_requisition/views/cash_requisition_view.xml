@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+		<!-- Cash Requisition Tree View  -->
+
+        <record model="ir.ui.view" id="cash_requisition_tree_view">
+            <field name="name">Cash Requisition List view</field>
+            <field name="model">cash.requisition</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+               <tree string="Cash Requisition">
+                   <field name="name"/>
+                   <field name="requisition_by"/>
+                  <field name="amount"/>
+               </tree>
+            </field>
+        </record>
+
+        <!-- Cash Requisition Form View -->
+
+        <record id="cash_requisition_form_view" model="ir.ui.view">
+            <field name="name">Cas Requisition Form view</field>
+            <field name="model">cash.requisition</field>
+            <field name="arch" type="xml">
+                <form string="Cash Requisition">
+                    <header>
+                        <button name="action_generate" type="object" states="draft"
+                            string="Generate" class="oe_highlight"/>
+                        <button name="action_submit" type="object" states="generate"
+                            string="Submit" class="oe_highlight"/>
+                        <button name="action_approve" type="object" states="submit"
+                            string="Approved" class="oe_highlight" groups="yuko_employee_iou.group_management" />
+                        <button name="action_generate" type="object" string="Re-Generate" states="generate"/>
+                        <button name="action_unlink" type="object" string="Unlink" states="generate"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                  <sheet>
+                      <group>
+                          <group>
+                              <field name="name" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+                              <field name="requisition_by" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+                              <field name="amount" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+                          </group>
+                          <group>
+                          </group>
+                      </group>
+                      <group>
+                          <field name="note" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+                      </group>
+                      <notebook position="inside">
+                            <page string="Requisition Line">
+                                    <field name="line_ids" attrs="{'readonly': [('state','not in',('draft'))]}">
+                                        <tree string="List" editable="bottom">
+                                            <field name="name"/>
+                                            <field name="requisition_by"/>
+                                            <field name="amount" style="text-align: center;"/>
+                                            <field name="note"/>
+                                        </tree>
+                                    </field>
+                            </page>
+                        </notebook>
+                  </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Cash Requisition Action -->
+
+        <record model="ir.actions.act_window" id="act_cash_requisition_view">
+            <field name="name">Daily Cash Requisition Summary</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cash.requisition</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to Create a New Record.
+                </p>
+            </field>
+        </record>
+
+        <!-- Cash Requisition Menu -->
+
+        <menuitem
+            name="Cash"
+            id="cash_requisition_view"
+            parent="account.menu_finance"
+            sequence="4"
+            groups="gbs_application_group.group_dept_manager,yuko_employee_iou.group_management,yuko_employee_iou.group_account_adviser"/>
+
+        <menuitem
+            action="act_cash_requisition_view"
+            id="menu_act_cash_requisition_view"
+            parent="cash_requisition_view"
+            sequence="1"
+            groups="yuko_employee_iou.group_management,yuko_employee_iou.group_account_adviser"/>
+
+		
+	</data>
+</odoo>

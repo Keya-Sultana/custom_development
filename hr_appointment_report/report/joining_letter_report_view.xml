@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+		<!-- Definition of the report -->
+		<report id="report_joining_letter"
+				model="hr.applicant"
+				string="Appointment Joining Letter"
+				name="hr_appointment_report.report_joining_letter_qweb"
+				file="hr_appointment_report.report_joining_letter_qweb"
+				report_type="qweb-pdf"
+				groups="hr_recruitment.group_hr_recruitment_user"/>
+
+		<!-- Main template -->
+		<template id="report_joining_letter_qweb">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+				<t t-call="yuko_report_layout.external_layout">
+					<div class="page">
+					<br/>
+						<div class="text-left">
+							<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/><br/>
+							<span t-field="o.partner_name"/><br/>
+							<span t-field="o.applicant_address"/>
+<!--							<span t-field="o.permanent_address"/>,<span t-field="o.permanent_thana"/>,<span t-field="o.permanent_city"/>,<br/>-->
+<!--							<span t-field="o.permanent_division"/>-<span t-field="o.permanent_postcode"/>, <span t-field="o.permanent_country"/>.-->
+<!--&lt;!&ndash;							Md. Parvej Alam<br/>&ndash;&gt;-->
+<!--							Manager, Human Resource Dept.<br/>-->
+<!--							Yuko Leather Goods Ltd.<br/>-->
+<!--							222, Faidabad, Dhakkhinkhan, <br/>-->
+<!--							Faidabad Primary School Road, <br/>-->
+<!--							Dhaka-1230, Bangladesh.-->
+						</div>
+						<br/><br/>
+
+						<b>Subject: Letter of appointment.</b><br/><br/><br/>
+
+						Dear  <span t-field="o.partner_name"/>, <br/><br/>
+
+						I am pleased to inform you that you have been appointed for the role of <span t-field="o.job_id"/>(<span t-field="o.department_id"/>).
+						This is an official letter confirming your employment with Yuko Leather Goods Ltd. starting on <span t-field="o.joining_date"/>.
+						<br/><br/>
+						Your employment is subject to the terms and conditions detailed in the contract document supplied individually with this letter.
+						<br/><br/>
+
+
+						Please sign and return this letter no later than 3 Days to signal your acceptance of this offer and all its terms.
+						Congratulations and welcome to Yuko Leather Goods Ltd.
+						<br/><br/><br/>
+
+
+						Sincerely,
+						<br/><br/>
+						<span t-raw="user.signature"/><br/>
+<!--						<span t-field="o.signature"/><br/>-->
+						Md. Saidur Rahman<br/>
+						Chief Executive Officer<br/>
+						Yuko Leather Goods Ltd.
+						<br/><br/><br/>
+						<strong>Attached Contract Documents:</strong>
+						<br/>
+						Work Timings<br/>
+						Probation Period<br/>
+						Salary<br/>
+						Other Benefits<br/>
+
+						Annual Leave
+
+					</div>
+				</t>
+				</t>
+			</t>
+		</template>
+
+
+	</data>
+</odoo>

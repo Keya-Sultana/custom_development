@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="bank_letter_layout">
+        <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+
+        <t t-call="yuko_report_layout.letter_layout_header" />
+        <t t-raw="0" />
+        <t t-call="yuko_report_layout.letter_layout_footer" />
+    </template>
+
+    <template id="letter_layout_header">
+        <div class="header">
+
+        </div>
+    </template>
+
+    <template id="letter_layout_footer">
+        <div class="footer"><br/>
+            <div class="row" style="margin-top: 5%;">
+                <div class="col-xs-2 text-left">
+                   <!-- <SPAN STYLE="text-decoration:overline">Prepared By</SPAN>  -->
+                    <p>Prepared By</p>
+                </div>
+                <div class="col-xs-4 text-center">
+                   <!-- <SPAN STYLE="text-decoration:overline">Checked By (HR and Admin)</SPAN>  -->
+                    <p>Checked By (HR and Admin)</p>
+                </div>
+                <div class="col-xs-3 text-center">
+                   <!-- <SPAN STYLE="text-decoration:overline">Manager (A and F)</SPAN>  -->
+                    <p>Manager (A and F)</p>
+                </div>
+                <div class="col-xs-3 text-right">
+                   <!-- <SPAN STYLE="text-decoration:overline">Saidur Rahman
+                            Chief Executive Officer</SPAN>  -->
+                    <p>Saidur Rahman<br/>
+                            Chief Executive Officer</p>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>

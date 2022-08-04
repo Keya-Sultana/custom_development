@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+	<data>
+
+		<record id="hr_employee_training_view_form" model="ir.ui.view">
+        <field name="name">employees traininginfo</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Training" groups="base.group_user">
+                    <group string="Training">
+                    <field name="training_ids" nolabel="1">
+                        <tree editable="top" string="Training">
+                            <field name="training_name" />
+                            <field name="start_date" />
+                            <field name="end_date" />
+                            <field name="institution" />
+                            <field name="certification" />
+                            <field name="location" />
+                            <field name="result" />
+                        </tree>
+                    </field>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+		
+	</data>
+</odoo>

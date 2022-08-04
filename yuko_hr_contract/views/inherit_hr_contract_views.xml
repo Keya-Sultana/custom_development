@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="inherit_hr_contract_view" model="ir.ui.view">
+            <field name="name">Employee Contract</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_employee_attendance_payroll.hr_contract_view_form2"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='ot_wage']" position="before">
+                        <field name="gross" />
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="inherit_hr_contract_view2" model="ir.ui.view">
+            <field name="name">Employee Contract2</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='advantages']" position="replace">
+                        <separator string="Job Responsibilities"/>
+                        <field name="job_respons" nolabel="1" widget="html" options="{'style-inline': true}"/>
+                        <separator string="Advantages"/>
+                        <field name="advantages" nolabel="1" widget="html" options="{'style-inline': true}"/>
+                    </xpath>
+                    <xpath expr="//notebook/page/separator" position="attributes">
+                        <attribute name="invisible">True</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='notes']" position="replace">
+                        <separator string="Terms &amp; Conditions"/>
+                        <field name="notes" nolabel="1" widget="html" options="{'style-inline': true}"/>
+                    </xpath>
+                    <xpath expr="/form/header" position="inside">
+                        <button name="%(report_salary_increment)d" string="Print Salary Increment Letter" type="action"/>
+                        <button name="%(report_job_confirmation)d" string="Print Job Confirmation Letter" type="action"/>
+                        <button name="%(report_employee_job_agreement)d" string="Print Job Agreement" type="action"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="hr_contract_view_form_new1" model="ir.ui.view">
+            <field name="name">hr.contract.form.allowance</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="gbs_hr_payroll.hr_contract_view_form_new"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='transport_allowance']" position="after">
+                        <field name="holiday_allowance" />
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+    </data>
+</odoo>

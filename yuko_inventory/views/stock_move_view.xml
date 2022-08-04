@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="inherit_view_move_tree" model="ir.ui.view">
+            <field name="name">stock.move.tree</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree/field[@name='product_id']" position="after">
+                    <field name="product_cat_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inherit_view_move_form" model="ir.ui.view">
+            <field name="name">stock.move.form</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group/group/group/field[@name='product_id']" position="after">
+                    <field name="product_cat_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inherit_view_move_search" model="ir.ui.view">
+            <field name="name">stock.move.search</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search/field[@name='product_id']" position="after">
+                    <field name="product_cat_id"/>
+                </xpath>
+                <xpath expr="//search/group/filter[@name='by_product']" position="after">
+                    <filter string="Product Category" name="groupby_product_cat_id" domain="[]"  context="{'group_by':'product_cat_id'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_picking_form_inherit_mrr_yuko">
+            <field name="name">stock.picking.inherit.mrr.form1</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock_picking_mrr.view_picking_form_inherit_mrr"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='button_print_mrr']" position="replace">
+                     <button name="button_print_mrr" string="Print GRN" attrs="{'invisible': [('check_mrr_button', '=', False)]}"
+                            type="object" class="oe_highlight" groups="stock.group_stock_user,gbs_application_group.group_head_of_plant"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="stock_picking_mrr.action_stock_picking_mrr">
+        <field name="name">Print GRN</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.picking</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="stock_picking_extend.view_stock_picking_tree2"/>
+        <field name="domain">[('check_mrr_button', '=', 'True')]</field>
+        <field name="help" type="html">
+            <p>
+                Here you can see MRR list.
+            </p>
+        </field>
+    </record>
+
+
+        <menuitem id="stock_picking_mrr.menu_picking_mrr"
+              name="Print GRN"
+              parent="stock.menu_stock_warehouse_mgmt"
+              sequence="6"
+              action="stock_picking_mrr.action_stock_picking_mrr"
+              groups="stock.group_stock_user"/>
+
+        <menuitem action="stock.action_inventory_form"
+                  id="stock.menu_action_inventory_form"
+                  parent="stock.menu_stock_inventory_control"
+                  sequence="30"
+                  groups="stock.group_stock_manager"/>
+
+
+
+        <!-- Invisible menu for Payroll -->
+
+        <record id="make_invisible_pending" model="res.groups">
+			<field name="name">Invisible menu for Pending</field>
+		</record>
+
+        <record id="stock_picking_mrr.menu_approval_picking" model="ir.ui.menu">
+			<field name="groups_id" eval="[(6,0,[ref('yuko_inventory.make_invisible_pending')])]" />
+		</record>
+
+    </data>
+</odoo>

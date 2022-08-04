@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="employee_offence_type_form_view" model="ir.ui.view">
+        <field name="name">employee.offence.type.form</field>
+        <field name="model">employee.offence.type</field>
+        <field name="arch" type="xml">
+            <form string="Units of Measure categories">
+                <group>
+                    <field name="name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="employee_offence_type_form_action" model="ir.actions.act_window">
+        <field name="name">Offence Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">employee.offence.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to add a new unit of measure category.
+          </p><p>
+            Units of measure belonging to the same category can be
+            converted between each others. For example, in the category
+            <i>'Time'</i>, you will have the following units of measure:
+            Hours, Days.
+          </p>
+        </field>
+    </record>
+    <menuitem action="employee_offence_type_form_action" id="menu_employee_offence_type_form_action"
+                  parent="hr.menu_human_resources_configuration"
+                  sequence="7"/>
+</odoo>

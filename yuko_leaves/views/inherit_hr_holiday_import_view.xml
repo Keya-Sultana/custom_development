@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Invisible menu for Import leaves data -->
+
+        <record id="make_invisible_import_leves_data" model="res.groups">
+			<field name="name">Invisible menu for Import Leaves Data</field>
+		</record>
+
+        <record id="hr_holiday_utility.menu_holidays_data_import" model="ir.ui.menu">
+			<field name="groups_id" eval="[(6,0,[ref('yuko_leaves.make_invisible_import_leves_data')])]" />
+		</record>
+
+	<record id="inherit_view_public_holidays_form" model="ir.ui.view">
+        <field name="name">HR public holidays</field>
+        <field name="model">hr.holidays.public</field>
+        <field name="inherit_id" ref="gbs_hr_public_holidays.view_public_holidays_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page/field/tree/field[@name='status']" position="after">
+                <field name="variable" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

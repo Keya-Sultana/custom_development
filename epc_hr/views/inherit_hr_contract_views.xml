@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="inherit_hr_employee_view_form3" model="ir.ui.view">
+            <field name="name">inherit.hr.employee.view.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//group[@string='Current Contract']" position="replace">
+                        <group>
+                            <field name="medic_exam" string="Medical Exam"/>
+                            <field name="vehicle"/>
+                            <field name="vehicle_distance"/>
+                        </group>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+</odoo>

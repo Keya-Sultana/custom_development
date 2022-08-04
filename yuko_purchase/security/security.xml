@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+	
+	    <record id="gbs_purchase_requisition.group_purchase_requisition_approver" model="res.groups">
+	        <field name="name">Purchase Requisition Approver</field>
+			<field name="category_id" ref="base.module_category_purchase_management"/>
+	    </record>
+	    
+	    <record id="gbs_purchase_requisition.group_purchase_requisition_validator" model="res.groups">
+	        <field name="name">Purchase Requisition Validator</field>
+			<field name="category_id" ref="base.module_category_purchase_management"/>
+	    </record>
+
+		<record id="purchase.group_purchase_manager" model="res.groups">
+	        <field name="name">Head of Purchase</field>
+	    </record>
+
+		<record id="purchase.group_purchase_user" model="res.groups">
+	        <field name="name">Manager</field>
+	    </record>
+
+		<record id="group_yuko_purchase_user" model="res.groups">
+	        <field name="name">User</field>
+			<field name="category_id" ref="base.module_category_purchase_management"/>
+	    </record>
+
+		<function name="write" model="ir.model.data">
+			<function name="search" model="ir.model.data">
+				<value eval="[('module', '=', 'purchase'), ('name', '=', 'group_purchase_manager')]"/>
+			</function>
+			<value eval="{'noupdate': True}" />
+		</function>
+
+		<function name="write" model="ir.model.data">
+			<function name="search" model="ir.model.data">
+				<value eval="[('module', '=', 'purchase'), ('name', '=', 'group_purchase_user')]"/>
+			</function>
+			<value eval="{'noupdate': True}" />
+		</function>
+
+		<function name="write" model="ir.model.data">
+			<function name="search" model="ir.model.data">
+				<value eval="[('module', '=', 'purchase'), ('name', '=', 'group_yuko_purchase_user')]"/>
+			</function>
+			<value eval="{'noupdate': True}" />
+		</function>
+	
+	</data>
+</odoo>

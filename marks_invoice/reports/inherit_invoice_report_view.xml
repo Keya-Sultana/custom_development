@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+<template id="report.external_layout_header">
+    <div class="header">
+        <div class="row">
+        </div>
+    </div>
+</template>
+
+<template id="report.external_layout_footer">
+    <div class="footer">
+    <ul t-if="not company.custom_footer" class="list-inline" name="financial_infos">
+                <li t-if="company.vat">TIN: <span t-field="company.vat"/></li>
+            </ul>
+    </div>      
+</template>
+
+<template id="report_marks_invoice_document" inherit_id="account.report_invoice_document">
+    <xpath expr="//div[@class='page']" position="replace">
+    <div class="page">
+        <div class="row">
+        	<div class="col-xs-6">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+						<br/>
+							<br/>
+                    		<address t-field="o.partner_id"
+                        	t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
+                    			<span t-if="o.partner_id.vat">TIN: <span t-field="o.partner_id.vat"/></span>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div class="col-xs-6">
+				<table border="1" class="table table-condensed" style="border-style:solid">
+					<thead>
+						<tr style="border: 1px solid black" class="text-center">
+							<p class="text-center">Invoice</p>
+						</tr>
+						<tr style="border: 1px solid black" class="text-center">
+							<td style="border: 1px solid black" class="text-center">Offer Ref No.</td>
+							<td style="border: 1px solid black" class="text-center"><span t-field="o.name"/></td>
+						</tr>
+						<tr style="border: 1px solid black" class="text-center">
+							<td style="border: 1px solid black" class="text-center">Invoice No.</td>
+							<td style="border: 1px solid black" class="text-center"><span t-field="o.number"/></td>
+						</tr>
+						<tr style="border: 1px solid black" class="text-center">
+							<td style="border: 1px solid black" class="text-center">Date</td>
+							<td style="border: 1px solid black" class="text-center"><span t-field="o.date_invoice"/></td>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>	
+		
+		<div class="row mb32">
+	    	<div class="col-xs-4">
+	        	<p>
+	            	<p>
+	                	PO : <span t-field="o.name"/>
+	                </p>
+	            </p>
+	         </div>
+	         <div class="col-xs-4">
+	            <p>
+	               <p>
+	                  Customer No:   <span t-field="o.partner_id.ref"/> 
+	               </p>
+	             </p>
+	          </div>
+	         <div class="col-xs-4">
+	            <p>
+	               <p>
+	                  Our Order No :  <span t-field="o.origin"/>
+	               </p>
+	             </p>
+	          </div>
+	     </div>
+		
+		<table border="1" class="table table-condensed" style="border-style:solid">
+							<thead>
+								<tr>
+									<th style="border: 1px solid black" class="text-center">Item No</th>
+									<th style="border: 1px solid black" class="text-center">Description</th>
+									<th style="border: 1px solid black" class="text-center">Qty</th>
+									<th style="border: 1px solid black" class="text-center">Unit Price Taka</th>
+									<th style="border: 1px solid black" class="text-center">Total Price Taka</th>
+								</tr>
+							</thead>
+							<tbody class="invoice_items_tbody">
+                           		<tr t-foreach="o.invoice_line_ids" t-as="l">
+                           			<td style="border: 1px solid black" class="text-center">
+                           			<t t-set="l_index" t-value="l_index + 1"/>
+										<span t-esc="l_index"/>
+									</td>
+                            		<td style="border: 1px solid black" class="text-center">
+										<span t-field="l.product_id.name"/>
+									</td>
+                            		<td style="border: 1px solid black" class="text-center">
+										<span t-field="l.quantity"/>
+										<span t-field="l.uom_id"  groups="product.group_uom"/>
+									</td>
+                            		<td style="border: 1px solid black" class="text-center">
+										<span t-field="l.price_unit"/>
+									</td>
+									<t t-set="total_price" t-value="(l.quantity * l.price_unit)"/>
+									<td style="border: 1px solid black" class="text-center">
+										<span t-field="l.amount_total"/>
+									</td>
+                        		</tr>
+                           	</tbody>
+						</table>
+						<div class="row">
+							<div class="col-xs-5 pull-right">
+                    			<table class="table table-condensed">
+                    				<tbody>
+                        				<tr class="border-black">
+                            				<td class="text-right"><strong>Total Price(In BDT)</strong></td>
+                            				<td class="text-right"><span t-field="o.amount_undiscount"/></td>
+                        				</tr>
+                        				<tr class="border-black">
+                            				<td class="text-right"><strong>Discount(In BDT)</strong></td>
+                            				<td class="text-right"><span t-field="o.amount_discount"/></td>
+                        				</tr>
+                        				<tr class="border-black">
+                            				<td class="text-right"><strong>Sub Total(In BDT)</strong></td>
+                            				<td class="text-right"><span t-field="o.sub_amount"/></td>
+                        				</tr>
+                        				<tr class="border-black">
+                            				<td class="text-right"><strong>Tax(In BDT)</strong></td>
+                            				<td class="text-right"><span t-field="o.amount_tax"/></td>
+                        				</tr>
+                        				<tr class="border-black">
+                            				<td class="text-right"><strong>Grand Total(In BDT)</strong></td>
+                            				<td class="text-right"><span t-field="o.total_amount"/></td>
+                        				</tr>
+                        			</tbody>
+                    			</table>
+            				</div>
+            			</div>
+		
+		
+		
+		<p>Amount in words :  <span t-esc="o.amount_to_text(o.amount_total)"/> </p>
+		<br />
+		<div>
+		<p>Comment:</p>
+			<table border="1" class="table table-condensed" style="border-style:solid">
+				<thead>
+					<tr>
+						<td style="border: 1px solid black"><span t-field="o.comment"/></td>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<br />
+		<p>Marks Automation Ltd</p>
+		<br />
+		<br/>
+		<br/>
+		
+		<div class="row">
+	    	<div class="col-xs-4">
+	        	<p class="text-left">
+	        		<strong>_____________________</strong><br/>
+	            	<strong >Authoried Signature</strong>
+	           	</p>
+	        </div>
+	        <div class="col-xs-4">
+	        	<p class="text-center">
+	        		
+	           	</p>
+	        </div>
+	  		<div class="col-xs-4">
+	        	<p class="text-center">
+	        		<strong>_____________________</strong><br/>
+	            	<strong>Receiver Signature</strong>
+	            </p>
+	        </div>
+	    </div>
+	    </div>
+	 </xpath>    
+</template>
+
+
+
+
+</data>
+</odoo>

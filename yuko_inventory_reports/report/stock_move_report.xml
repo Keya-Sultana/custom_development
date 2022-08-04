@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="report_stock_move_qweb">
+            <t t-call="report.html_container">
+                <t t-call="yuko_report_layout.external_layout">
+                    <div class="page" style="page-break-inside: auto">
+                        <div class="row">
+                            <style type="text/css">
+                                .report-title { text-align:center; }
+                                .odo-bg-gray, .odo-bg-gray > td { background-color: #f5f5f5; }
+                            </style>
+                            <div class="clearfix">
+                                <h4 class="report-title">Stock Move Report</h4>
+                                <div class="row" style="padding-top:10px;">
+                                    <div class="col-xs-6" style="padding-bottom:10px;">
+                                        <strong>Location : </strong>
+
+
+                                        <br/>
+                                        <strong>Product : </strong>
+
+                                    </div>
+                                    <div class="col-xs-6 text-right">
+                                        <strong>Period From : </strong>
+                                        <strong>To : </strong>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table table-report-xs table-bordered table-striped">
+                                <thead>
+                                    <tr class="odo-bg-gray">
+                                        <th class="text-center" style="width:20%;">Product</th>
+                                        <th class="text-center" style="width:10%;">Quantity</th>
+                                        <th class="text-center" style="width:15%;">Source Location</th>
+                                        <th class="text-center" style="width:15%;">Destination location</th>
+                                        <th class="text-center" style="width:10%;">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t>
+                                        <tr>
+                                            <td>
+
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <report id="action_stock_move_report"
+                string="Stock Move Report"
+                model="stock.move"
+                report_type="qweb-pdf"
+                name="yuko_inventory_reports.report_stock_move_qweb"
+                file="yuko_inventory_reports.report_stock_move_qweb"
+                multi="True"
+        />
+    </data>
+</odoo>

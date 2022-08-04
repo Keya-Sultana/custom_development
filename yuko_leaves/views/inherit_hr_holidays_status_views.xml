@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="edit_holiday_status_form_yuko" model="ir.ui.view">
+        <field name="name">hr.holidays.status.form</field>
+        <field name="model">hr.holidays.status</field>
+        <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+        <field name="arch" type="xml">
+           <data>
+               <xpath expr="//form/group" position="after">
+                   <notebook colspan="4">
+                       <page string="Terms &amp; Condition">
+                           <field name="terms_condition" widget="html" options="{'style-inline': true}"/>
+                       </page>
+                   </notebook>
+               </xpath>
+           </data>
+        </field>
+    </record>
+
+    <record id="view_holiday_yuko_tree" model="ir.ui.view">
+        <field name="name">Leave Request Tree</field>
+        <field name="model">hr.holidays</field>
+        <field name="inherit_id" ref="hr_holidays.view_holiday"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="replace">
+                <tree decoration-danger="state == 'refuse'" decoration-info="state == 'draft'" string="Leave Requests"
+                      colors="purple:state == 'confirm';orange:state == 'draft';brown:state == 'validate1';green:state == 'validate';red:state == 'cancel';yellow:state == 'refuse';"
+                       decoration-bf="message_needaction == True">
+                    <field name="employee_id"/>
+                    <field name="holiday_type" string="Mode" groups="base.group_no_one"/>
+                    <field name="holiday_status_id"/>
+                    <field name="name"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="number_of_days" string="Number of Days" sum="Remaining Days"/>
+                    <field name="state"/>
+                    <field name="payslip_status" invisible="1"/>
+                    <button name="toggle_payslip_status" field_name="payslip_status" type="object"
+                        widget="toggle_button" options='{"active": "Reported in last payslips", "inactive": "To Report in Payslip"}' groups="hr_holidays.group_hr_holidays_manager"/>
+                    <field name="category_id" invisible="1"/>
+                    <field name="department_id" invisible="not context.get('set_visible',False)"/>
+                    <field name="manager_id" invisible="1"/>
+                    <field name="user_id" invisible="1"/>
+                    <field name="message_needaction" invisible="1"/>
+                </tree>
+                </xpath>
+        </field>
+    </record>
+
+</odoo>

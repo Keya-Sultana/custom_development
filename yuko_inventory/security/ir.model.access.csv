@@ -1,0 +1,40 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_procurement_order_compute_all,procurement.order.compute.all,procurement.model_procurement_order_compute_all,stock.group_stock_user,1,1,1,1
+
+access_stock_gate_in_user,stock.gate.in,stock_gate_in.model_stock_gate_in,stock.group_stock_user,1,1,1,1
+access_stock_gate_in_manager,stock.gate.in,stock_gate_in.model_stock_gate_in,stock.group_stock_manager,1,1,1,1
+
+access_stock_gate_in_purchase_manager,stock.gate.in,stock_gate_in.model_stock_gate_in,purchase.group_purchase_user,1,1,1,1
+access_stock_gate_in_admin,Admin User,stock_gate_in.model_stock_gate_in,yuko_inventory.group_yuko_admin_user,1,1,1,1
+access_stock_gate_in_security,Security User,stock_gate_in.model_stock_gate_in,yuko_inventory.group_yuko_security,1,1,1,1
+
+
+access_stock_gate_out_user,stock.gate.out,stock_gate_out.model_stock_gate_out,stock.group_stock_user,1,1,1,1
+access_stock_gate_out_manager,stock.gate.out,stock_gate_out.model_stock_gate_out,stock.group_stock_manager,1,1,1,1
+
+access_stock_out_line_user,stock.out.line,model_stock_out_line,stock.group_stock_user,1,1,1,1
+access_stock_out_line_manager,stock.out.line,model_stock_out_line,stock.group_stock_manager,1,1,1,1
+
+access_stock_product_line_user,stock.product.line,model_stock_product_line,stock.group_stock_user,1,1,1,1
+access_stock_product_line_manager,stock.product.line,model_stock_product_line,stock.group_stock_manager,1,1,1,1
+access_stock_product_line_purchase_manager,stock.product.line,model_stock_product_line,purchase.group_purchase_user,1,1,1,1
+access_stock_product_line_admin,Admin User,model_stock_product_line,yuko_inventory.group_yuko_admin_user,1,1,1,1
+access_stock_product_line_security,Security User,model_stock_product_line,yuko_inventory.group_yuko_security,1,1,1,1
+
+
+access_stock_gate_out_admin_user,stock.gate.out,stock_gate_out.model_stock_gate_out,yuko_inventory.group_yuko_admin_user,1,1,1,0
+access_stock_gate_out_admin_manager,stock.gate.out,stock_gate_out.model_stock_gate_out,yuko_inventory.group_yuko_admin_manager,1,1,1,1
+access_stock_gate_out_security,stock.gate.out,stock_gate_out.model_stock_gate_out,yuko_inventory.group_yuko_security,1,1,1,1
+access_stock_gate_out_sale_manager,stock.gate.out,stock_gate_out.model_stock_gate_out,sales_team.group_sale_manager,1,1,1,1
+
+access_stock_out_line_admin_user,stock.out.line,model_stock_out_line,yuko_inventory.group_yuko_admin_user,1,1,1,0
+access_stock_out_line_admin_manager,stock.out.line,model_stock_out_line,yuko_inventory.group_yuko_admin_manager,1,1,1,1
+access_stock_out_line_security,stock.out.line,model_stock_out_line,yuko_inventory.group_yuko_security,1,1,1,1
+access_stock_out_line_sale_manager,stock.out.line,model_stock_out_line,sales_team.group_sale_manager,1,1,1,1
+
+access_stock_picking_qc_user,stock.picking qc user,stock_picking_extend.model_stock_picking,yuko_inventory.group_stock_qc_user,1,1,1,0
+
+access_stock_move_qc_user,stock.move qc user,stock.model_stock_move,yuko_inventory.group_stock_qc_user,1,1,1,0
+
+
+

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+        <record id="inherit_applicant_form_view" model="ir.ui.view">
+            <field name="name">hr.applicant.form.view.inherit</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='stage_id']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
+                </xpath>
+                <xpath expr="//button[@name='create_employee_from_applicant']" position="replace">
+                    <button string="Create Employee" name="create_employee_from_applicant" type="object"
+                        class="oe_highlight" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                </xpath>
+                <xpath expr="//button[@name='create_employee_from_applicant']" position="before">
+                    <button name="action_confirm" type="object" states="draft"
+                                string="Confirm" class="oe_highlight"/>
+                    <button name="%(report_job_offer)d" string="Print Job Offer Letter" type="action"/>
+                </xpath>
+                <xpath expr="//field[@name='department_id']" position="after">
+                    <field name="joining_date" attrs="{'readonly': [('state','not in',('confirm'))]}"/>
+                </xpath>
+                <xpath expr="//field[@name='type_id']" position="after">
+                    <field name="applicant_address"/>
+                </xpath>
+            </field>
+		</record>
+
+    </data>
+</openerp>

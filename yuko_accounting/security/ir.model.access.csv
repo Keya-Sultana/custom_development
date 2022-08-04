@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_crossovered_budget_emp,crossovered.budget,account_budget.model_crossovered_budget,base.group_user,1,1,1,0
+access_crossovered_budget_dept_manager,crossovered.budget,account_budget.model_crossovered_budget,gbs_application_group.group_dept_manager,1,1,1,0
+access_crossovered_budget_audit,crossovered.budget,account_budget.model_crossovered_budget,yuko_employee_iou.group_audit,1,1,1,0
+access_crossovered_budget_management,crossovered.budget,account_budget.model_crossovered_budget,yuko_employee_iou.group_management,1,1,1,1
+
+access_crossovered_budget_lines_emp,crossovered.budget.lines,account_budget.model_crossovered_budget_lines,base.group_user,1,0,0,0
+access_crossovered_budget_lines_dept_manager,crossovered.budget.lines,account_budget.model_crossovered_budget_lines,gbs_application_group.group_dept_manager,1,0,0,0
+access_crossovered_budget_lines_audit,crossovered.budget.lines,account_budget.model_crossovered_budget_lines,yuko_employee_iou.group_audit,1,1,1,0
+access_crossovered_budget_lines_management,crossovered.budget.lines,account_budget.model_crossovered_budget_lines,yuko_employee_iou.group_management,1,1,1,1
+
+access_account_budget_post_emp,account.budget.post,account_budget.model_account_budget_post,base.group_user,1,1,1,0

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+		<!-- Definition of the report -->
+		<report id="report_employee_job_agreement"
+				model="hr.contract"
+				string="Print Job Agreement"
+				name="yuko_hr_contract.report_job_agreement_qweb"
+				file="yuko_hr_contract.report_job_agreement_qweb"
+				report_type="qweb-pdf"
+                menu="False"
+				paperformat="yuko_hr_contract.Yuko_pad_paperformat"
+                />
+
+		<!-- Main template -->
+		<template id="report_job_agreement_qweb">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+				<t t-name="report.external_layout">
+					<div class="page">
+                        <div class="row">
+                            <style type="text/css">
+                                .report-title { text-align:center; }
+                                .odo-bg-gray, .odo-bg-gray > td { background-color: #f5f5f5; }
+                            </style>
+							<div class="text-left">
+								<b>Date: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/></b><br/>
+								Yuko Leather Goods Ltd.<br/>
+								222, Faidabad, Dhakkhinkhan, Faidabad Primary School Road, <br/>
+								Dhaka-1230, Bangladesh.
+							</div>
+							<br/><br/>
+                            <div class="clearfix">
+                                <h3 class="report-title">Employee Contract</h3>
+                            </div><br/>
+
+							<table class="table table-condensed table-bordered">
+								<tr>
+									<td><strong>Employee Name:</strong></td>
+									<td><span t-field="o.employee_id.name"/></td>
+									<td><strong>Basic Salary for the Position:</strong></td>
+									<td><span t-field="o.wage"/></td>
+								</tr>
+								<tr>
+									<td><strong>Contract Type:</strong></td>
+									<td><span t-field="o.type_id.name"/></td>
+									<td><strong>Gross Salary for the Position:</strong></td>
+									<td><span t-field="o.gross"/></td>
+								</tr>
+								<tr>
+									<td><strong>Department:</strong></td>
+									<td><span t-field="o.department_id.name"/></td>
+									<td><strong>Working Schedule:</strong></td>
+									<td><span t-field="o.working_hours.name"/></td>
+								</tr>
+								<tr>
+									<td><strong>Job Title:</strong></td>
+									<td><span t-field="o.job_id.name"/></td>
+									<td><strong>Trail Period Duration:</strong></td>
+									<td><span t-field="o.trial_date_start"/> - <span t-field="o.trial_date_end"/></td>
+								</tr>
+							</table><br/>
+
+							<p><b>Job Responsibilities:</b></p>
+							<p><span t-raw="o.job_respons"/></p><br/><br/>
+
+							<p><b>Advantages:</b></p>
+							<p><span t-raw="o.advantages"/></p><br/><br/>
+
+							<p><b>Terms &amp; conditions:</b></p>
+							<p><span t-raw="o.notes"/></p><br/><br/>
+
+
+
+							<p style="padding-bottom: 10%;">I have read this agreement and agree to the above mention terms and conditions.</p>
+
+							<div class="row">
+								<div class="col-xs-4 text-right">
+									<strong style="border-top: 1px solid black;">Employee Signature</strong>
+								</div>
+								<div class="col-xs-4 text-center"></div>
+								<div class="col-xs-4 text-left">
+									<strong style="border-top: 1px solid black;">Authorized signature with seal</strong>
+								</div>
+							</div>
+
+
+
+                        </div>
+					</div>
+				</t>
+				</t>
+			</t>
+		</template>
+
+
+	</data>
+</odoo>

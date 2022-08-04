@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+     <record id="inherit_final_settlement_form_view" model="ir.ui.view">
+            <field name="name">final.settlement.form.view yuko</field>
+            <field name="model">final.settlement</field>
+            <field name="inherit_id" ref="hr_employee_exit.final_settlement_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='emp_payslip_ids']" position="replace">
+                </xpath>
+                <xpath expr="//group/group[@name='sale_total']" position="replace">
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

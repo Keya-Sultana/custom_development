@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rule_hr_employee_offence" model="ir.rule">
+        <field name="name">General Employee</field>
+        <field name="model_id" ref="model_hr_employee_offence"/>
+        <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+        <field name="perm_read" eval="True" />
+        <field name="perm_create" eval="False" />
+        <field name="perm_write" eval="False" />
+        <field name="perm_unlink" eval="False" />
+        <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+</odoo>

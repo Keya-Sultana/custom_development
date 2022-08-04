@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="shipping_port_type_form_view" model="ir.ui.view">
+        <field name="name">shipping.port.type.form</field>
+        <field name="model">shipping.port.type</field>
+        <field name="arch" type="xml">
+            <form string="Shipping Method">
+                <group>
+                    <field name="name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="port_type_form_action" model="ir.actions.act_window">
+        <field name="name">Shipping Port</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">shipping.port.type</field>
+        <field name="context">{}</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="menu_port_type_form_action" parent="purchase.menu_purchase_config"
+            sequence="4" action="port_type_form_action" groups="base.group_system"/>
+</odoo>

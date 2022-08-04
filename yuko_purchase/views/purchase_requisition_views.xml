@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="purchase_requisition_yuko_tree" model="ir.ui.view">
+        <field name="name">purchase.requisition.tree</field>
+        <field name="model">purchase.requisition</field>
+        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="replace">
+                <tree decoration-bf="message_needaction==True" decoration-muted="state == 'cancel'" decoration-danger="date_end and date_end&lt;current_date" string="Purchase Agreements"
+                    colors="purple:state == 'progress';brown:state == 'approve_head_procurement';green:state == 'done';gold:state == 'close';red:state == 'cancel';">
+                        <field name="message_needaction" invisible="1"/>
+                        <field name="name"/>
+                        <field name="user_id"/>
+                        <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                        <field name="ordering_date"/>
+                        <field name="date_end"/>
+                        <field name="origin"/>
+                        <field name="state"/>
+                    </tree>
+                </xpath>
+        </field>
+    </record>
+
+    <record id="pr_view_form" model="ir.ui.view">
+        <field name="name">purchase.requisition.view.form1</field>
+        <field name="model">purchase.requisition</field>
+        <field name="inherit_id" ref="gbs_purchase_requisition.inherit_pr_view_form"/>
+        <field name="arch" type="xml">
+            <button name="action_done" position="replace">
+                <button name="action_done" states="progress,done,approve_head_procurement" string="Done" type="object"/>
+            </button>
+            <button name="action_approve" position="replace">
+                <button name="action_approve" groups="gbs_purchase_requisition.group_purchase_requisition_validator"
+                                states="approve_procurement" string="Validate" type="object" class="btn-primary"/>
+            </button>
+            <button name="action_open" position="replace">
+                <button name="action_open" groups="gbs_purchase_requisition.group_purchase_requisition_approver"
+                                states="progress" string="Approve" type="object" class="btn-primary"/>
+            </button>
+            <xpath expr="//field[@name='state']" position="replace">
+                <field name="state" widget="statusbar" statusbar_visible="draft,progress,approve_procurement,done"/>
+            </xpath>
+            <xpath expr="//field[@name='region_type']" position="replace">
+                <field name="region_type" widget="selection" readonly="1"
+                       attrs="{'invisible': [('state','in',('draft','progress'))]}"/>
+            </xpath>
+            <xpath expr="//field[@name='purchase_by']" position="replace">
+                <field name="purchase_by" widget="selection" readonly="1"
+                       attrs="{'invisible': [('state','in',('draft','progress'))]}"/>
+            </xpath>
+                <xpath expr="//button[@name='action_cancel']" position="replace">
+                    <button name="action_cancel" groups="commercial.group_commercial_user,gbs_purchase_requisition.group_purchase_requisition_validator,gbs_purchase_requisition.group_purchase_requisition_approver"
+                            confirm="Are you sure you want to cancel?" states="approve_procurement,done" string="Cancel" type="object"/>
+                </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_pr_filter_view_form1" model="ir.ui.view">
+            <field name="name">purchase.requisition.filter.view.form1</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="gbs_purchase_requisition.inherit_pr_filter_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='validation']" position="replace">
+                    <filter name="validation" string="To Validate" domain="[('state','=','approve_procurement')]"/>
+                </xpath>
+                <xpath expr="//filter[@name='active']" position="replace">
+                    <filter name="active" string="Active" domain="[('state', 'in', ('draft','progress','approve_procurement','done'))]"/>
+                </xpath>
+                <xpath expr="//filter[@name='approval']" position="replace">
+                    <filter name="approval" string="To Approve" domain="[('state','=','progress')]"/>
+                </xpath>
+            </field>
+        </record>
+
+    <record id="purchase_requisition_yuko_form" model="ir.ui.view">
+        <field name="name">purchase.requisition.form</field>
+        <field name="model">purchase.requisition</field>
+        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+        <field name="arch" type="xml">
+            <button name="action_in_progress" position="replace">
+				<button name="action_in_progress" states="draft" string="Confirm" type="object" class="btn-primary"
+                        groups="stock.group_stock_manager"/>
+            </button>
+            <xpath expr="/form/sheet/notebook/page/field/tree/field[@name='product_uom_id']" position="before">
+                <field name="date" string="Due Date"/>
+            </xpath>
+        </field>
+    </record>
+
+<!--   Here only change menu name-->
+
+<!--    <menuitem-->
+<!--            id="gbs_purchase_requisition.menu_purchase_requisition_pending_approval"-->
+<!--            sequence="2"-->
+<!--            name="Pending PR (Validation)"-->
+<!--            parent="purchase.menu_procurement_management"-->
+<!--            action="gbs_purchase_requisition.action_purchase_requisition_to_approve"-->
+<!--            groups="gbs_purchase_requisition.group_purchase_requisition_approver"/>-->
+
+<!--    <menuitem-->
+<!--            id="gbs_purchase_requisition.menu_purchase_requisition_pending_validate"-->
+<!--            sequence="3"-->
+<!--            name="Pending PR (Approval)"-->
+<!--            parent="purchase.menu_procurement_management"-->
+<!--            action="gbs_purchase_requisition.action_purchase_requisition_to_validate"-->
+<!--            groups="gbs_purchase_requisition.group_purchase_requisition_validator"/>-->
+
+</odoo>

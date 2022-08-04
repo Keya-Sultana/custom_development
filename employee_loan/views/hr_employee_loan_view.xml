@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+		<!-- Inherit Employee Loan Policy Form View -->
+		<record id="inherit_employee_loan_view_yuko" model="ir.ui.view">
+            <field name="name">inherit.hr.employee.loan.policy</field>
+            <field name="model">hr.employee.loan.policy</field>
+            <field name="inherit_id" ref="hr_employee_loan.hr_employee_loan_policy_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//group/group/field[@name='value']" position="after">
+                        <field name="eligibility" widget="html" options="{'style-inline': true}"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <!-- Inherit Employee Loan Form View -->
+		<record id="inherit_employee_loan_form_view" model="ir.ui.view">
+            <field name="name">inherit.hr.employee.loan</field>
+            <field name="model">hr.employee.loan</field>
+            <field name="inherit_id" ref="hr_employee_loan.hr_employee_loan_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//div/h1/field[@name='employee_id']" position="replace">
+                        <field name="employee_id" placeholder="Employee's Name" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                    </xpath>
+                    <xpath expr="//header/button[@name='%(hr_employee_loan.hr_loan_wizard_action_view)d']" position="after">
+                        <button name="action_close" type="object" string="Closed" states="disbursed" groups="hr.group_hr_manager,hr_employee_loan.group_manager_loan" />
+                    </xpath>
+                    <xpath expr="//notebook/page[2]" position="after">
+                        <page string="Guarantor">
+                            <div class="oe_title"><br/>
+                                <label for="guarantor_type"/><br/>
+                                <field name="is_employee" invisible="1"/>
+                                <field name="guarantor_type" widget="radio"
+                                        options="{'horizontal': true}"/>
+                            </div>
+                            <group>
+                                <group>
+                                    <field name="guarantor_emp" attrs="{'invisible': [('is_employee', '=', False)]}"
+                                    options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+                                    <field name="guarantor_name" attrs="{'invisible': [('is_employee', '=', True)]}"/>
+                                    <field name="guarantor_nid" />
+                                    <field name="date_of_birth" />
+                                    <field name="contact"/>
+                                    <field name="father_name"/>
+                                    <field name="mother_name"/>
+                                    <field name="address"/>
+                                </group>
+                                <group>
+                                    <field name="photo" widget='image' class="oe_left oe_avatar" />
+                                    <field name="signature" widget='image' class="oe_left oe_avatar" />
+                                </group>
+                            </group>
+                        </page>
+                    </xpath>
+                    <xpath expr="//notebook/page[2]" position="replace">
+                        <page string="Proofs">
+                                <field name="employee_loan_proof_ids" readonly="True">
+                                    <field name="name"/>
+                                    <field name="mandatory"/>
+                                </field>
+                            </page>
+                    </xpath>
+                    <xpath expr="//notebook/page[4]" position="replace">
+                        <page string="Policies">
+                                <field name="employee_loan_policy_ids" readonly="True">
+                                    <field name="name"/>
+                                </field>
+                            </page>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+		
+	</data>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- notify all employees of module installation -->
+        <record id="module_install_notification" model="mail.message">
+            <field name="model">mail.channel</field>
+            <field name="res_id" ref="mail.channel_all_employees"/>
+            <field name="message_type">notification</field>
+            <field name="subtype_id" ref="mail.mt_comment"/>
+            <field name="subject">Leave Management application installed!</field>
+            <field name="body"><![CDATA[<p>Manage employee leaves from the top menu "Human Resources". Employees can create leave requests that are validated by their manager and/or HR officers.</p>
+<p>Once validated, they are visible in the employee's calendar. HR officers can define leave types and allocate leaves to employees and employee categories.</p>]]></field>
+        </record>
+
+
+        <!-- Holidays-related subtypes for messaging / Chatter -->
+
+
+        <record id="mt_payslip_close" model="mail.message.subtype">
+            <field name="name">Close</field>
+            <field name="res_model">hr.payslip.run</field>
+            <field name="default" eval="False"/>
+            <field name="description">Payslip Batches Closed</field>
+        </record>
+
+
+    </data>
+</odoo>

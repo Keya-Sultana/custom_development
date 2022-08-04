@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+	<data>
+
+        <!-- Inherit HR Employee Form View -->
+
+        <record id="inherit_hr_checklist_view_form" model="ir.ui.view">
+            <field name="name">Employee Checklists</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Checklists" groups="base.group_user">
+                        <group string="Employee Checklists">
+                            <field name="check_ids" nolabel="1">
+                                <tree string="Check Lists">
+                                    <field name="checklists_ids" string="Checklists Item"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+    </data>
+</odoo>

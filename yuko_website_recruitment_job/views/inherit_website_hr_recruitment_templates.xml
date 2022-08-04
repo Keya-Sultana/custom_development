@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<odoo>
+        <template id="website_job_description_yuko" inherit_id="website_hr_recruitment.detail"
+                  name="Job description on Portal Yuko">
+            <xpath expr="//section[hasclass('bg-white')]" position="replace">
+                <section class="mb16 bg-white">
+                <div class="container">
+                    <div class="pull-right">
+                        <a t-attf-href="/jobs/apply/#{job.id}" class="btn btn-primary btn-lg pull-right mt32 mb4">Apply Now!</a>
+                        <br/>
+                        <t t-call="website.publish_management">
+                            <t t-set="object" t-value="job"/>
+                            <t t-set="publish_edit" t-value="True"/>
+                        </t>
+                    </div>
+                    <label class="mb0 mt16"><a href="/jobs">Jobs</a></label> /
+                    <h1 class="mb0 mt0" t-field="job.name"/>
+                    <h2 class="mb0 mt0" t-field="job.department_id.name"/>
+                    <h4 class="mt0" t-field="job.address_id" t-field-options='{
+                        "widget": "contact",
+                        "fields": ["city"],
+                        "no_tag_br": True
+                    }'/>
+                </div>
+            </section>
+            </xpath>
+        </template>
+
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record id="view_inherit_currency_form" model="ir.ui.view">
+            <field name="name">res.currency.form.inherit</field>
+            <field name="model">res.currency</field>
+            <field name="priority">3</field>
+            <field name="inherit_id" ref="base.view_currency_form"/>
+            <field name="arch" type="xml">
+                <xpath expr='//group[@groups="base.group_no_one"]' position="after">
+                <group>
+                	<group string="Amount to Word">
+                        <field name="unit_string"/>
+                    	<field name="decimal_string"/>
+                    </group>
+                </group>    
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</openerp>

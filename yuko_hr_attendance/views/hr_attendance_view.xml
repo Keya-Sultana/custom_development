@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_attendance_view_filter_yuko" model="ir.ui.view">
+        <field name="name">hr_attendance_view_filter_yuko</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_filter" />
+        <field name="arch" type="xml">
+            <xpath expr="//search/filter[@name='today']" position="before">
+                <filter name="yesterday" string="Yesterday"
+                        domain="[
+                            '&amp;',
+                            ('check_in', '&gt;=', (context_today()-relativedelta(days=1)).strftime('%Y-%m-%d 00:00:00')),
+                            ('check_in', '&lt;=', context_today().strftime('%Y-%m-%d 00:00:00')),
+                        ]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

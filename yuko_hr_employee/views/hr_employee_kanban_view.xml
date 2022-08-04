@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+	<data>
+
+<!--        <record id="hr_kanban_view_employees" model="ir.ui.view">-->
+<!--            <field name="name">HR - Employees Kanban</field>-->
+<!--            <field name="model">hr.employee</field>-->
+<!--            <field name="inherit_id" ref="hr_employee_id.hr_kanban_view_employees"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//li[@id='last_login']" position="replace">-->
+<!--                    <li id="last_login" position="after">-->
+<!--                        <li t-if="record.identification_id">-->
+<!--                            <field name="identification_id"/>-->
+<!--                        </li>-->
+<!--                    </li>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <record id="view_employee_kanban_yuko" model="ir.ui.view">
+            <field name="name">Employee Kanban View</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div/ul/li[2]" position="after">
+                    <li t-if="record.department_id.raw_value"><field name="department_id"/></li>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_employee_kanban_inherit_hr_attendancett" model="ir.ui.view">
+            <field name="name">hr.employee</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_attendance.view_employee_kanban_inherit_hr_attendance"/>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+                <xpath expr="//div/div/field[@name='attendance_state']" position="replace">
+                    </xpath>
+            </field>
+        </record>
+
+        <record id="view_employee_form_inherit_hr_attendance_yuko" model="ir.ui.view">
+            <field name="name">hr.employee</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_attendance.view_employee_form_inherit_hr_attendance"/>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+                <xpath expr="//div/field[@name='attendance_state']" position="replace">
+                    </xpath>
+            </field>
+        </record>
+
+        <record id="hr_manual_attendance_batches_form_yuko" model="ir.ui.view">
+            <field name="name">Manual Attendance Batches</field>
+            <field name="model">hr.manual.attendance.batches</field>
+            <field name="inherit_id" ref="hr_manual_attendance.hr_manual_attendance_batches_form"/>
+            <field name="arch" type="xml">
+                <button name="action_approve" position="replace">
+					<button string="Approve" name="btn_action_approve" type="object" class="oe_highlight"
+                            attrs="{'invisible': ['|',('current_user_is_approver', '!=', True),('state', '!=', 'confirm')]}"/>
+				</button>
+                <button name="action_validate" position="replace">
+					<button string="Validate" name="action_validate" states="confirm" class="oe_highlight" type="object"
+							groups="hr_attendance.group_hr_attendance_manager,hr.group_hr_manager"/>
+				</button>
+                <button name="action_draft" position="replace">
+                    <field name="can_reset" invisible="1"/>
+					<button string="Reset to Draft" name="action_draft" type="object"
+                                attrs="{'invisible': ['|', ('can_reset', '=', False), ('state', 'not in', ['confirm'])]}"/>
+				</button>
+                <xpath expr="//group/group/field[@name='pending_approver']" position="replace">
+                    <field name="pending_approver"/>
+                    <field name="reference"/>
+                </xpath>
+                <xpath expr="//notebook/page[2]" position="replace">
+                    <page string="Approbations">
+                        <field name="approbations_ids">
+                            <tree editable="bottom">
+                                <field name="approver" />
+                                <field name="date" />
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Invisible menu for Attendance -->
+
+        <record id="make_invisible_my_attendance" model="res.groups">
+			<field name="name">Invisible menu for Attendance</field>
+		</record>
+
+        <record id="hr_attendance.menu_hr_attendance_my_attendances" model="ir.ui.menu">
+			<field name="groups_id" eval="[(6,0,[ref('yuko_hr_employee.make_invisible_my_attendance')])]" />
+		</record>
+
+    </data>
+</odoo>

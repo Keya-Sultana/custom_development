@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+		<!-- Definition of the report -->
+		<report id="report_yuko_tds"
+				model="hr.payslip"
+				string="TDS Challan Form"
+				name="yuko_tds_challan_report.report_yuko_tds_qweb"
+				file="yuko_tds_challan_report.report_yuko_tds_qweb"
+				report_type="qweb-pdf"
+                menu="False"
+                paperformat="report_layout.paperformat_backend_landscape"
+        />
+
+		<!-- Main template -->
+		<template id="report_yuko_tds_qweb">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+				<t t-call="yuko_report_layout.internal_layout">
+					<div class="page">
+                        <div class="row">
+                            <style type="text/css">
+                                .report-title { text-align:center; }
+                                .odo-bg-gray, .odo-bg-gray > td { background-color: #f5f5f5; }
+                            </style>
+                            <div class="clearfix">
+                                <h4 class="report-title" style="font-size: 25px">চালান ফরম </h4>
+                            </div>
+
+                            <div class="row mb32" >
+                                <div class="col-xs-4 text-center">
+                                    <strong></strong>
+                                </div>
+                                <div class="col-xs-4 text-center" style="font-size: 21px">
+                                    <h3>টি, আর ফরম  নং ৬ ( এস, আর ৩৭ দ্রষ্টব্য )</h3>
+                                </div>
+                                <div class="col-xs-4 text-center">
+                                     <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center" style="border: 1px solid black; width:10%;">১ম (মূল) কপি</th>
+                                                    <th class="text-center" style="border: 1px solid black; width:10%;">২য় কপি</th>
+                                                    <th class="text-center" style="border: 1px solid black; width:10%;">৩য় কপি</th>
+                                                </tr>
+                                            </thead>
+                                     </table>
+                                </div>
+                            </div>
+
+                            <p>চালান নং ...............................................................তারিখ: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%m-%d-%Y')"/></p>
+                            <p>বাংলাদেশ ব্যাংক / সোনালী ব্যাংক................................................................. জেলার .................................................................... শাখার টাকা জমা দেওয়ার চালান </p>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-1 text-left">
+                                    <strong>কোড নং </strong>
+                                </div>
+                                <div class="col-xs-3 text-left">
+                                     <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center" style="border: 1px solid black; height:1%; width:4%;">1</th>
+                                                    <th class="text-center" style="border-top: 1px solid white; border-bottom: 1px solid white; border-right: 1px solid black; height:1%; width:4%;"></th>
+                                                    <th class="text-center" style="border: 1px solid black; height:1%; width:4%;">1</th>
+                                                    <th class="text-center" style="border: 1px solid black; height:1%; width:4%;">1</th>
+                                                    <th class="text-center" style="border: 1px solid black; height:1%; width:4%;">4</th>
+                                                    <th class="text-center" style="border: 1px solid black; height:1%; width:4%;">1</th>
+                                                    <th class="text-center" style="border-top: 1px solid white; border-bottom: 1px solid white; border-right: 1px solid black; height:1%; width:4%;"></th>
+                                                    <th class="text-center" style="border: 1px solid black; height:1%; width:4%;">0</th>
+                                                    <th class="text-center" style="border: 1px solid black; height:1%; width:4%;">0</th>
+                                                    <th class="text-center" style="border: 1px solid black; height:1%; width:4%;">2</th>
+                                                    <th class="text-center" style="border: 1px solid black; height:1%; width:4%;">5</th>
+                                                    <th class="text-center" style="border-top: 1px solid white; border-bottom: 1px solid white; border-right: 1px solid black; height:1%; width:4%;"></th>
+                                                    <th class="text-center" style="border: 1px solid black; height:1%; width:4%;">0</th>
+                                                    <th class="text-center" style="border: 1px solid black; height:1%; width:4%;">1</th>
+                                                    <th class="text-center" style="border: 1px solid black; height:1%; width:4%;">1</th>
+                                                    <th class="text-center" style="border: 1px solid black; height:1%; width:4%;">1</th>
+                                                </tr>
+                                            </thead>
+                                     </table>
+                                </div>
+                                <div class="col-xs-8 text-left"></div>
+                            </div>
+
+                            <table class="table table-bordered ">
+                                    <thead>
+                                        <tr style="border: 1px solid black;">
+                                            <th colspan="4" style="border: 1px solid black; width:70%;" class="text-center col-separator">জমা প্রদানকারী কর্তিক পূরন করিতে হইবে</th>
+                                            <th colspan="2" class="text-center" style="border: 1px solid black; width:15%;">টাকার অংক </th>
+                                            <th rowspan="2" class="text-center" style="border: 1px solid black; width:15%;">বিভাগের নাম এবং  চালানের পৃষ্ঠাংকনকারী কর্মকর্তার নাম, পদবী ও দপ্তর ।* </th>
+                                        </tr>
+                                        <tr style="border: 1px solid black;">
+                                            <th class="text-center" style="border: 1px solid black; width:25%;">যাহার মারফত প্রদত্ত হইল তাহার নাম ও ঠিকানা ।</th>
+                                            <th class="text-center" style="border: 1px solid black; width:25%;">যে ব্যক্তির / প্রতিষ্ঠানের পক্ষ হয়তে টাকা প্রদত্ত হইল তাহার নাম , পদবী ও ঠিকানা । </th>
+                                            <th class="text-center" style="border: 1px solid black; width:10%;">কি বাবদ জমা দেওয়া হইল তাহার বিবরণ । </th>
+                                            <th class="text-center" style="border: 1px solid black; width:10%;">মুদ্রা ও নোটের বিবরণ / ড্রাফট, পে- অর্ডার ও চেকের বিবরণ । </th>
+                                            <th class="text-center" style="border: 1px solid black; width:10%;">টাকা</th>
+                                            <th class="text-center" style="border: 1px solid black; width:5%;">পয়সা</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            <t>
+                                                <tr style="border: 1px solid black; page-break-inside: avoid">
+                                                    <td style="border: 1px solid black;" class="text-center">
+                                                        <p>Yuko Leather Goods Ltd.<br/>
+                                                        222, Faidabad (Primary School Road),<br/> Dakshinkhan, Uttara,<br/>Dhaka-1230</p></td>
+                                                    <td style="border: 1px solid black;">Employee Name:<span t-field="o.employee_id.name"/><br/>
+                                                        Designation:<span t-field="o.employee_id.job_id"/><br/>TIN NO:<span t-field="o.employee_id.tin_no"/></td>
+                                                    <td style="border: 1px solid black;" class="text-center">
+                                                        <p>Tax Deduction under section 50 (Deduction at Source from Salaries) For the month of [<span t-field="o.date_from"/>]</p></td>
+                                                    <td style="border: 1px solid black;" class="text-center">Cash</td>
+                                                    <td style="border: 1px solid black;" class="text-right"><span t-field="o.contract_id.tds"/></td>
+                                                    <td style="border: 1px solid black;" class="text-center">00</td>
+                                                    <td style="border: 1px solid black;" class="text-center"><p>DTC Circle-123, Zone-06 Dhaka</p></td>
+                                                </tr>
+                                                <tr style="border: 1px solid black;">
+                                                    <td style="border: 1px solid black;" colspan="3"></td>
+                                                    <td style="border: 1px solid black;" class="text-center">মোট টাকা </td>
+                                                    <td style="border: 1px solid black;" class="text-right"><span t-field="o.contract_id.tds"/></td>
+                                                    <td style="border: 1px solid black;" class="text-center">00</td>
+                                                    <td style="border: 1px solid black;"></td>
+                                                </tr>
+                                                <tr style="border: 1px solid black;">
+                                                    <th colspan="4" style="border: 1px solid black; width:60%;" class="text-left">টাকা (কথায়)   <span t-esc="o.amount_to_text(o.contract_id.tds)"/> Only</th>
+                                                    <th colspan="3" rowspan="3" style="border: 1px solid black; width:30%;" class="text-center">ম্যানেজার <br/>বাংলাদেশ ব্যাংক / সোনালী ব্যাংক </th>
+                                                </tr>
+                                                <tr style="border: 1px solid black;">
+                                                    <th colspan="4" style="border: 1px solid black; width:60%;" class="text-left">টাকা পাওয়া গেল</th>
+                                                </tr>
+                                                <tr style="border: 1px solid black;">
+                                                    <th colspan="7" rowspan="3" style="border: 1px solid black; width:100%;" class="text-left">তারিখঃ <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%m-%d-%Y')"/></th>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                </table>
+                            <p>নোটঃ ১। সংশ্লিষ্ট দপ্তরের সহিত যোগাযোগ করিয়া সঠিক কড নম্বর জানিয়া লইবেন <br/>     ২। *যে সকল ক্ষেত্রে কর্মকর্তা  কর্তৃক পৃষ্ঠাংকন প্রয়োজন, সে সকল ক্ষেত্ৰে প্রযোজ্য হইবে। </p>
+
+                            <p>বাংলাদেশ সরকারের ই-সিটিজেন সার্ভিস এপ্লিকেশন থেকে মুদ্রিত </p>
+
+                        </div>
+					</div>
+				</t>
+				</t>
+			</t>
+		</template>
+
+
+	</data>
+</odoo>

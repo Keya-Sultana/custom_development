@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_employee_offence_emp,hr.employee.offence,model_hr_employee_offence,base.group_user,1,0,0,0
+access_hr_employee_offence_dept_manager,hr.employee.offence,model_hr_employee_offence,gbs_application_group.group_dept_manager,1,1,1,0
+access_hr_employee_offence_officer,hr.employee.offence,model_hr_employee_offence,hr.group_hr_user,1,1,1,0
+access_hr_employee_offence_manager,hr.employee.offence,model_hr_employee_offence,hr.group_hr_manager,1,1,1,1
+
+access_hr_employee_offence_line_emp,hr.employee.offence.line,model_hr_employee_offence_line,base.group_user,1,0,0,0
+access_hr_employee_offence_line_dept_manager,hr.employee.offence.line,model_hr_employee_offence_line,gbs_application_group.group_dept_manager,1,0,0,0
+access_hr_employee_offence_line_officer,hr.employee.offence.line,model_hr_employee_offence_line,hr.group_hr_user,1,1,1,0
+access_hr_employee_offence_line_manager,hr.employee.offence.line,model_hr_employee_offence_line,hr.group_hr_manager,1,1,1,1

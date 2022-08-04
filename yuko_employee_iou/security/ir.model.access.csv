@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_employee_iou_emp,hr.employee.iou,hr_employee_iou.model_hr_employee_iou,base.group_user,1,1,1,0
+access_hr_employee_iou_dept_manager,hr.employee.iou,hr_employee_iou.model_hr_employee_iou,gbs_application_group.group_dept_manager,1,1,1,0
+access_hr_employee_iou_audit,hr.employee.iou,hr_employee_iou.model_hr_employee_iou,yuko_employee_iou.group_audit,1,1,1,0
+access_hr_employee_iou_management,hr.employee.iou,hr_employee_iou.model_hr_employee_iou,yuko_employee_iou.group_management,1,1,1,1
+
+access_hr_employee_iou_line_emp,hr.employee.iou.line,hr_employee_iou.model_hr_employee_iou_line,base.group_user,1,0,0,0
+access_hr_employee_iou_line_dept_manager,hr.employee.iou.line,hr_employee_iou.model_hr_employee_iou_line,gbs_application_group.group_dept_manager,1,0,0,0
+access_hr_employee_iou_line_audit,hr.employee.iou.line,hr_employee_iou.model_hr_employee_iou_line,yuko_employee_iou.group_audit,1,1,1,0
+access_hr_employee_iou_line_management,hr.employee.iou.line,hr_employee_iou.model_hr_employee_iou_line,yuko_employee_iou.group_management,1,1,1,1

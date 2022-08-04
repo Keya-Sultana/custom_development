@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+	<data>
+
+		<record id="hr_employee_reference_view_form" model="ir.ui.view">
+        <field name="name">employees reference info</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Reference" groups="base.group_user">
+                    <group string="Employee Reference">
+                    <field name="reference_ids" nolabel="1">
+                        <tree editable="top" string="Reference">
+                            <field name="name" />
+                            <field name="organization" />
+                            <field name="designation" />
+                            <field name="phone_no" />
+                            <field name="relation" />
+                            <field name="email_address" />
+                            <field name="facebook_id" />
+                        </tree>
+                    </field></group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+		
+	</data>
+</odoo>

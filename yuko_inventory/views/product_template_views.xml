@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="inherit_product_product_tree_view1" model="ir.ui.view">
+            <field name="name">product.product.tree1</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="gbs_stock_product.product_product_tree_view1"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree/field[@name='lst_price']" position="after">
+                    <field name="standard_price"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_template_product_form" model="ir.ui.view">
+            <field name="name">inherited.product.template</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.view_template_property_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page/group/group[@name='stock_property']" position="after">
+                    <group name = "manufacturer_and_no">
+                        <field name="manufacturer"/>
+                        <field name="manufacturing_date"/>
+                        <field name="place_origin"/>
+                        <field name="style_no"/>
+                        <field name="series_no"/>
+                    </group>
+                </xpath>
+                <xpath expr="//page/group/group[@name='stock_property']/field[@name='property_stock_inventory']" position="after">
+                    <field name="destination_location" domain="[('usage','=','internal')]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- All Transfer new tree view-->
+        <record id="inventory_vpicktree_tree" model="ir.ui.view">
+        <field name="name">stock.picking.tree</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="replace">
+                    <tree string="Picking list" decoration-info="state == 'draft'" colors="purple:state == 'waiting';brown:state == 'confirmed';green:state == 'done';blue:state == 'partially_available';gold:state == 'assigned';red:state == 'cancel';">
+                        <field name="name"/>
+                        <field name="location_dest_id"/>
+                        <field name="partner_id"/>
+                        <field name="date" invisible="1"/>
+                        <field name="min_date"/>
+                        <field name="origin"/>
+                        <field name="group_id" invisible="1"/>
+                        <field name="backorder_id"/>
+                        <field name="state"/>
+                        <field name="priority" invisible="1"/>
+                        <field name="picking_type_id" invisible="1"/>
+						<field name="write_uid"/>
+						<field name="write_date"/>
+                    </tree>
+                </xpath>
+        </field>
+    </record>
+
+        <!-- Receive Goods new tree view-->
+        <record id="view_picking_tree" model="ir.ui.view">
+        <field name="name">view.picking.tree1</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock_picking_extend.view_stock_picking_tree1"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="replace">
+                    <tree string="Receive Transfers" decoration-info="state == 'draft'" colors="purple:state == 'waiting';brown:state == 'confirmed';green:state == 'done';blue:state == 'partially_available';gold:state == 'assigned';red:state == 'cancel';">
+                        <field name="name"/>
+                        <field name="location_dest_id"/>
+                        <field name="partner_id"/>
+                        <field name="date" invisible="1"/>
+                        <field name="min_date"/>
+                        <field name="origin"/>
+                        <field name="group_id" invisible="1"/>
+                        <field name="backorder_id"/>
+                        <field name="state"/>
+                        <field name="priority" invisible="1"/>
+                        <field name="picking_type_id" invisible="1"/>
+						<field name="write_uid"/>
+						<field name="write_date"/>
+                    </tree>
+                </xpath>
+        </field>
+    </record>
+
+        <!-- Quality Control new tree view-->
+        <record id="view_picking_tree2" model="ir.ui.view">
+        <field name="name">view.picking.tree2</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock_picking_extend.view_stock_picking_tree2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="replace">
+                    <tree string="Receive Transfers" create="false" edit="false" decoration-info="state == 'draft'" colors="purple:state == 'waiting';brown:state == 'confirmed';green:state == 'done';blue:state == 'partially_available';gold:state == 'assigned';red:state == 'cancel';">
+                        <field name="name"/>
+                        <field name="location_dest_id"/>
+                        <field name="date" invisible="1"/>
+                        <field name="min_date"/>
+                        <field name="origin"/>
+                        <field name="group_id" invisible="1"/>
+                        <field name="backorder_id"/>
+                        <field name="state"/>
+                        <field name="priority" invisible="1"/>
+                        <field name="picking_type_id" invisible="1"/>
+						<field name="write_uid"/>
+						<field name="write_date"/>
+                    </tree>
+                </xpath>
+        </field>
+    </record>
+
+    <!-- Invisible menu for Product gate in -->
+
+        <record id="make_invisible_product_gatein" model="res.groups">
+			<field name="name">Invisible menu for Product gate in</field>
+		</record>
+
+        <record id="product_gate_in.product_gate_in_menu" model="ir.ui.menu">
+			<field name="groups_id" eval="[(6,0,[ref('yuko_inventory.make_invisible_product_gatein')])]" />
+		</record>
+
+        <!-- Invisible menu for Procurement Exception -->
+
+        <record id="make_invisible_procurement_exception" model="res.groups">
+			<field name="name">Invisible menu for Procurement Exception</field>
+		</record>
+
+        <record id="stock.menu_stock_procurement_action" model="ir.ui.menu">
+			<field name="groups_id" eval="[(6,0,[ref('yuko_inventory.make_invisible_procurement_exception')])]" />
+		</record>
+
+        <!-- Invisible menu for Global Procurement Rules -->
+
+        <record id="make_invisible_global_procurement_rules" model="res.groups">
+			<field name="name">Invisible menu for Global Procurement Rules</field>
+		</record>
+
+        <record id="stock.menu_procurement_rules" model="ir.ui.menu">
+			<field name="groups_id" eval="[(6,0,[ref('yuko_inventory.make_invisible_global_procurement_rules')])]" />
+		</record>
+
+        <!-- Invisible menu for Global Push Rules -->
+
+        <record id="make_invisible_global_push_rules" model="res.groups">
+			<field name="name">Invisible menu for Global Push Rules</field>
+		</record>
+
+        <record id="stock.menu_stock_location_path" model="ir.ui.menu">
+			<field name="groups_id" eval="[(6,0,[ref('yuko_inventory.make_invisible_global_procurement_rules')])]" />
+		</record>
+
+    </data>
+</openerp>

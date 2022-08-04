@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+	<data>
+
+		<record id="hr_employee_special_view_form" model="ir.ui.view">
+        <field name="name">employees specialization info</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Specialization" groups="base.group_user">
+                    <group string="Specialization">
+                    <field name="speciali_ids" nolabel="1">
+                        <tree string="Specialization">
+                            <field name="item" />
+                            <field name="type" />
+                            <field name="category" />
+                            <field name="priority" />
+                            <field name="performance" />
+                            <field name="productivity" />
+                            <field name="comments" />
+                        </tree>
+                        <form>
+                            <group>
+                                <group>
+                                    <field name="type" />
+                                    <field name="item" />
+                                    <field name="category" />
+                                </group>
+                                <group>
+                                    <field name="priority" />
+                                    <field name="performance" />
+                                    <field name="productivity" />
+                                </group>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="comments" />
+                                </group>
+                            </group>
+                        </form>
+                    </field>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+		
+	</data>
+</odoo>

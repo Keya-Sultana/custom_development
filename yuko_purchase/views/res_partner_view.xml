@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="yuko_view_partner_form" model="ir.ui.view">
+            <field name="name">Res Partner Yuko</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="phone" position="after">
+                    <field name="alt_phone"/>
+                </field>
+                <field name="mobile" position="after">
+                    <field name="alt_mobile"/>
+                </field>
+                <field name="fax" position="after">
+<!--                    <field name="bin_no"/>-->
+<!--                    <field name="tin_no"/>-->
+                    <field name="reg_no"/>
+                </field>
+                <field name="email" position="after">
+                    <field name="alt_email"/>
+                </field>
+                <field name="website" position="after">
+                    <field name="founded_date"/>
+                </field>
+                <xpath expr="//form/sheet/notebook/page[@name='sales_purchases']/group/group[@name='sale']/field[@name='user_id']" position="before">
+                    <field name="entry_date"/>
+                    <field name="priority" widget="priority" />
+                    <field name="shipping_addresss"/>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[@name='sales_purchases']/group/group[@name='sale']/field[@name='user_id']" position="after">
+                    <field name="credit_limit"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="inherited_res_partner_supplier_view" model="ir.ui.view">
+            <field name="name">inherited.res.partner.supplier</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="gbs_supplier.inherited_res_partner_supplier"/>
+            <field name="arch" type="xml">
+                <field name="sector_id" position="replace">
+                    <field name="sector_id" string="Business Sector"/>
+                </field>
+                <field name="supplier_type" position="replace"></field>
+                <field name="ntn_no" position="replace"></field>
+                <field name="gst_no" position="replace"></field>
+                <xpath expr="//form/sheet/notebook/page/group/group[@name='purchase']/field[@name='supplier_category_id']" position="after">
+                    <field name="supplier_type" />
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page/group/group[@name='purchase']/field[@name='iec_no']" position="replace">
+                    <field name="billing_address"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

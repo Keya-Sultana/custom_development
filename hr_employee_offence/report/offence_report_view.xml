@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+		<!-- Definition of the report -->
+		<report id="report_employee_offence"
+				model="hr.employee.offence"
+				string="Employee Offence Report"
+				name="hr_employee_offence.report_offence_qweb"
+				file="hr_employee_offence.report_offence_qweb"
+				report_type="qweb-pdf" />
+
+		<!-- Main template -->
+		<template id="report_offence_qweb">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+				<t t-call="yuko_report_layout.external_layout">
+					<div class="page">
+
+						<strong>Printing Time : </strong><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+						<br/><br/>
+						<strong><span t-field="o.employee_id"/></strong><br/>
+						<strong><span t-field="o.employee_id.job_id"/></strong><br/>
+						<strong><span t-field="o.employee_id.department_id"/></strong><br/>
+						<br/>
+
+						RE: SHOW CAUSE LETTER / WARNING LETTER.<br/><br/><br/>
+
+						Dear Mr./Ms./Mrs. <span t-field="o.employee_id"/>, <br/><br/>
+
+						We are warning regarding your occurrence which is briefed in below. A detailed evaluation report will maintain with this letter for you to look into and review.
+						<br/><br/>
+						We have discussed and advised you not to do again this type of following unacceptable offence.
+						<br/><br/>
+
+						<table class="table table-condensed">
+							<tr style="border: 1px solid black">
+								<td style="border: 1px solid black"><strong>Reference Number</strong></td>
+								<td style="border: 1px solid black"><span t-field="o.name"/></td>
+								<td style="border: 1px solid black"><strong>Recorded By</strong></td>
+								<td style="border: 1px solid black"><span t-field="o.recorded_by"/></td>
+							</tr>
+							<tr style="border: 1px solid black">
+								<td style="border: 1px solid black"><strong>Offence Type</strong></td>
+								<td style="border: 1px solid black"><span t-field="o.offence_type"/></td>
+								<td style="border: 1px solid black"><strong>Offence Date</strong></td>
+								<td style="border: 1px solid black"><span t-field="o.offence_date"/></td>
+							</tr>
+							<tr style="border: 1px solid black">
+								<td style="border: 1px solid black"><strong>Damaged Amount</strong></td>
+								<td style="border: 1px solid black"><span t-field="o.damaged_amount"/></td>
+								<td style="border: 1px solid black"><strong>Penalty Amount</strong></td>
+								<td style="border: 1px solid black"><span t-field="o.penalty_amount"/></td>
+							</tr>
+                    	</table>
+						<br/>
+						<strong>Description:</strong><br/>
+						<span t-field="o.description"/><br/>
+
+						<strong>Employee's Replies:</strong><br/>
+						<span t-field="o.replies"/>
+
+						<br/><br/>
+						As discussed, we will be closely monitoring and evaluating your next activities.<br/><br/>
+
+						We have a schedule meeting at the end of the upcoming evaluation period and we will discuss your improvement. If you continue to show unacceptable work behavior, your employment may be subject for termination. Please be guided accordingly.<br/><br/>
+
+						Sincerely,
+						<br/><br/>
+<!--						<strong><span t-field="o.recorded_by"/></strong><br/>-->
+						<strong><span t-raw="user.signature"/></strong><br/>
+
+
+					</div>
+				</t>
+				</t>
+			</t>
+		</template>
+
+
+	</data>
+</odoo>

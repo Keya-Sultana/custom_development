@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+        <!-- Indent Return Tree View -->
+		<record id='view_indent_return_tree' model='ir.ui.view'>
+			<field name="name">Indent Return List</field>
+			<field name="model">indent.return</field>
+			<field name="arch" type="xml">
+				<tree string="Indent Returns" ecoration-bf="message_needaction == True"
+					  colors="gray:state=='received';blue:state=='inprogress';">
+					<field name="name" />
+					<field name="employee_id" />
+					<field name="stock_location_id" />
+					<field name="indent_date" />
+					<field name="required_date" />
+					<field name="state" />
+					<field name="message_needaction" invisible="1"/>
+				</tree>
+			</field>
+		</record>
+
+        <!-- Indent Return Form View -->
+		<record id='view_indent_return_form' model='ir.ui.view'>
+			<field name="name">Indent Return Form View</field>
+			<field name="model">indent.return</field>
+			<field name="arch" type="xml">
+				<form string="Indent Return Form View">
+					<header>
+						<button name="indent_confirm" string="Confirm" states="draft"
+								class="oe_highlight" type="object"/>
+						<button name="action_view_picking" string="Inventory Receive" type="object"
+								states="inprogress" class="oe_highlight" groups="stock.group_stock_user"/>
+<!--                        <button name="action_view_picking" string="Validate" type="object"-->
+<!--								states="received" class="oeigh_hlight"/>-->
+
+						<field name="state" widget="statusbar"
+							   statusbar_visible="draft,inprogress,received"
+							   />
+					</header>
+					<sheet>
+						<group>
+							<group>
+								<field name="employee_id"/>
+								<field name="depart_id"/>
+								<field name="requirement"/>
+								<field name="stock_location_id" options="{'no_create': True,'no_open':True}"/>
+							</group>
+							<group>
+								<field name="days_of_backdating_indent" invisible="1"/>
+								<field name="indent_date" attrs="{'readonly': [('days_of_backdating_indent','=',0)]}"/>
+								<field name="required_date" />
+								<field name="origin" />
+								<field name="indent_type" options="{'no_create': True,'no_open':True}"
+									   placeholder="Please Select"/>
+							</group>
+						</group>
+
+						<notebook>
+							<page string="Products">
+								<field name="product_lines">
+									<tree string="Return Products" editable="bottom">
+										<field name="sequence" widget="handle"/>
+										<field name="category_id" domain="[('type','!=','view')]" options="{'no_create': True,'no_open':True}"/>
+										<field name="product_id" domain="[('type','!=','service')]" options="{'no_create': True,'no_open':True}"/>
+										<field name="name" readonly="1" />
+										<field name="qty_available" invisible="1"/>
+										<field name="qty_available_now" readonly="1" groups="stock.group_stock_user,stock_indent.group_stock_indent_approver"/>
+										<field name="product_uom" string="UOM"/>
+										<field name="product_uom_qty" sum="Total Qty"/>
+										<field name="received_qty" sum="Total Receive Qty" readonly="1"/>
+										<field name="issue_qty" invisible="1"/>
+										<field name="price_unit" invisible="1"/>
+										<field name="remarks"/>
+									</tree>
+								</field>
+
+								<div class="oe_clear">
+									<label for="material_required_for" />
+								</div>
+								<field name="material_required_for" class="oe_inline" placeholder="The material is required for..." />
+
+							</page>
+							<page string="Others">
+								<group>
+									<group>
+										<field name="company_id" groups="base.group_multi_company"
+											   options="{'no_create': True,'no_open':True}"/>
+										<field name="operating_unit_id" options="{'no_create': True,'no_open':True}"
+                               			groups="operating_unit.group_multi_operating_unit" />
+
+									</group>
+									<group>
+										<field name="warehouse_id" readonly="1" groups="stock.group_stock_user" options="{'no_create': True,'no_open':True}"/>
+										<field name="picking_type_id"/>
+									</group>
+								</group>
+							</page>
+						</notebook>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" />
+						<field name="message_ids" widget="mail_thread" />
+					</div>
+				</form>
+			</field>
+		</record>
+
+		<!-- Sequence-->
+
+        <record id="indent_return_seq" model="ir.sequence">
+            <field name="name">Indent Return</field>
+            <field name="code">indent.return</field>
+            <field name="prefix">Indent-Re-%(year)s-</field>
+            <field eval="6" name="padding"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="False" name="company_id"/>
+        </record>
+
+        <!-- Indent Return Window Action -->
+		<record id='action_indent_return' model='ir.actions.act_window'>
+			<field name="name">Indent Returns</field>
+			<field name="res_model">indent.return</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+        <menuitem action="action_indent_return" name="Indent Returns"
+				  parent="stock_indent.menu_indent_indent_main" id="menu_indent_return" sequence="2"
+				  groups="base.group_user"/>
+
+
+    </data>
+</odoo>

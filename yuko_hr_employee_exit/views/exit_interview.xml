@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+	<data>
+
+        <!-- Inherit HR Employee Exit Interview Form View -->
+
+        <record id="inherit_exit_interview_form_view" model="ir.ui.view">
+            <field name="name">exit_interview_form_view</field>
+            <field name="model">employee.exit.interview</field>
+            <field name="inherit_id" ref="hr_employee_exit.exit_interview_form_view"/>
+            <field name="arch" type="xml">
+				<button name="action_submit" position="replace">
+                    <button name="action_emp_notify" states="draft" type="object" string="Employee Notification" groups ="hr.group_hr_manager, hr.group_hr_user" class="oe_highlight"/>
+					<button name="action_submit" states="draft" type="object" string="Submit" groups ="hr.group_hr_manager, hr.group_hr_user" class="oe_highlight"/>
+				</button>
+                <button name="action_validate" position="replace">
+					<button string="Approve" name="action_validate" groups="gbs_application_group.group_dept_manager"
+                                attrs="{'invisible': [('state', 'not in', ['submit'])]}"
+                                type="object" class="oe_highlight"/>
+				</button>
+                <button name="action_approved" position="replace">
+					<button string="Validate" name="action_approved" groups="gbs_hr_security.group_hr_director,hr.group_hr_manager"
+                                attrs="{'invisible': [('state','not in',['validate'])]}"
+                                type="object" class="oe_highlight"/>
+				</button>
+                <button name="action_done" position="replace">
+					<button string="Approved" name="action_done"
+                                attrs="{'invisible': [('state','not in',['approved'])]}" groups ="hr.group_hr_manager"
+                                type="object" class="oe_highlight" invisible="True"/>
+				</button>
+                <button name="action_reset" position="replace">
+					<button string="Reset to Draft" name="action_reset" groups="gbs_application_group.group_dept_manager,hr.group_hr_manager"
+                                attrs="{'invisible': [('state', 'in', ['draft','submit','done'])]}"
+                                type="object" invisible="True"/>
+				</button>
+                <field name="line_ids" position="replace">
+                    <field name="line_ids" nolabel="1" attrs="{'readonly':[('state','not in',['draft','submit'])]}">
+                            <tree editable="bottom">
+                                <field name="factor" options='{"no_open": True,"no_create": 1, "no_create_edit": 1}'/>
+                                <field name="critical_incidents"/>
+                                <field name="point"/>
+                            </tree>
+                        </field>
+                </field>
+                <field name="question_set_ids" position="replace">
+                    <field name="question_set_ids" nolabel="1" attrs="{'readonly':[('state','not in',['draft','submit'])]}">
+                            <tree editable="bottom">
+                                <field name="question"/>
+                                <field name="answer"/>
+                            </tree>
+                        </field>
+                </field>
+
+                <xpath expr="//group/field[@name='recommend']" position="replace">
+                    <field name="recommend" widget="radio" nolabel="1" attrs="{'readonly':[('state','not in',['draft','submit'])]}"/>
+                </xpath>
+                <xpath expr="//field[@name='contract_add']" position="replace">
+                    <field name="contract_add" nolabel="1" attrs="{'readonly':[('state','not in',['draft','submit'])]}"/>
+                </xpath>
+                <xpath expr="//field[@name='comment_supervisor']" position="replace">
+                    <field name="comment_supervisor" nolabel="1" attrs="{'readonly':[('state','not in',['draft','submit'])]}"/>
+                </xpath>
+                <xpath expr="//group/field[@name='permission']" position="replace">
+                    <field name="permission" widget="radio" nolabel="1" attrs="{'readonly':[('state','not in',['draft','submit'])]}"/>
+                </xpath>
+                <xpath expr="//field[@name='comment_hr']" position="replace">
+                    <field name="comment_hr" nolabel="1" attrs="{'readonly':[('state','not in',['draft','submit'])]}"/>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

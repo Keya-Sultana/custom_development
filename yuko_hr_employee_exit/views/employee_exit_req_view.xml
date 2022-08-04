@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+	<data>
+
+        <!-- Inherit HR Employee Exit Request Form View -->
+
+        <record id="inherit_exit_req_form_view" model="ir.ui.view">
+            <field name="name">hr.exit.req.form</field>
+            <field name="model">hr.emp.exit.req</field>
+            <field name="inherit_id" ref="hr_employee_exit.exit_req_form_view"/>
+            <field name="arch" type="xml">
+				<button name="exit_confirm" position="replace">
+					<button string="Confirm" name="action_confirm" states="draft" type="object" class="oe_highlight"/>
+					<field name="can_reset" invisible="1"/>
+					<button string="Reset to Draft" name="action_draft" type="object"
+                                    attrs="{'invisible': ['|', ('can_reset', '=', False), ('state', 'not in', ['confirm'])]}"/>
+				</button>
+
+				<button name="exit_validate" position="replace">
+					<field name="current_user_is_approver" invisible="True" />
+					<button string="Approve" name="btn_action_approve" type="object"
+						attrs="{'invisible': ['|', ('current_user_is_approver', '!=', True),('state', '!=', 'confirm')]}"
+						class="oe_highlight" />
+				</button>
+
+				<button name="exit_done" position="replace">
+					 <button string="Validate" name="action_validate" groups ="hr.group_hr_manager" states="confirm,validate1" type="object"
+                                class="oe_highlight" />
+				</button>
+
+				<field name="approver2_by" position="after">
+					<field name="pending_approver" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+				</field>
+				<field name="approved1_date" position="replace">
+					<field name="approved1_date" invisible="1"/>
+				</field>
+				<field name="approver1_by" position="replace">
+					<field name="approver1_by" invisible="1"/>
+				</field>
+				<xpath expr="//notebook/page[2]" position="after">
+					<page string="Approbations">
+						<field name="approbations">
+							<tree>
+								<field name="approver_id" />
+								<field name="date" />
+							</tree>
+						</field>
+					</page>
+				</xpath>
+			</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<template id="inherit_report_individual_payslip1" inherit_id="gbs_hr_payroll_bank_letter.report_individual_payslip1">
+            <xpath expr="//t/t" position="replace">
+                <t t-call="yuko_report_layout.bank_letter_layout">
+					<div class="page">
+						<div class="row">
+							<p><span t-esc="cur_month"/> <span t-esc="cur_day"/>, <span t-esc="cur_year"/></p><br/>
+							<p>To</p>
+							<p>The Manager,<br/>
+							Dutch Bangla Bank Ltd.<br/>
+							Dakshinkhan Branch<br/>
+							Dhaka-1230<br/>
+							Bangladesh.</p>
+
+							<br/><br/>
+
+							<p><b><u>Subject: Disbursement of <span t-esc="payslip_report_name"/> into the Account of employee of Yuko Leather Goods
+								Ltd. from A/C:<span t-esc="mother_bank_ac"/>.</u></b></p>
+							<br/><br/>
+							<p>Dear Sir,</p>
+							<p>We would like to inform you that, a list of employees belongs to
+							Yuko Leather Goods Ltd. showing amount of taka as salary/wages to the right side of
+							their names. Total amount of money is Tk. <b><span t-esc="total_net"/>/-</b> (<span t-esc="amount_to_text_bdt"/> Only).</p>
+
+                            <p>We therefore request you to take necessary steps to credit the amount of
+							wages in favor of their personal accounts. </p>
+
+							<br/><br/><br/><br/>
+							<div>
+								<p>Thanking You</p>
+								<br/><br/><br/>
+								<p>Saidur Rahman</p>
+								<p>Chief Executive Officer</p>
+								<p><b>YUKO LEATHER GOODS LTD.</b></p>
+							</div>
+
+
+							<p style = "page-break-after: always;"> </p>
+
+							<p><u>CD A/C Name: YUKO LEATHER GOODS LTD.</u></p>
+							<p><u>CD A/C NUMBER: <span t-esc="mother_bank_ac"/></u></p>
+							<p><u><span t-esc="payslip_report_name"/></u></p>
+
+							<p class="text-right"><b>Date:</b> <span t-esc="time.strftime('%Y-%m-%d')" /></p>
+
+							<table class="table table-report-sm table-bordered table-striped">
+								<thead>
+									<tr
+											style="background-color:#B4FDF0;
+												border-bottom: 1px solid #030303;">
+											<th>SN</th>
+											<th>Account Holder</th>
+											<th>Designation</th>
+											<th>Department</th>
+											<th>A/C No.</th>
+											<th>Amount (Tk.)</th>
+
+									</tr>
+								</thead>
+								<tbody>
+									<t t-foreach="docs" t-as="k">
+										<t t-if="k['val']">
+											<t t-foreach="k['val']" t-as="o">
+												<t t-if="o['BNET'] != '0.00'">
+													<tr>
+														<td><span t-esc="o['sn']"/></td>
+														<td><span t-esc="o['emp_name']"/></td>
+														<td><span t-esc="o['emp_desig']"/></td>
+														<td><span t-esc="o['emp_dep']"/></td>
+														<td><span t-esc="o['acc_no']"/></td>
+
+														<td class="text-right">
+															<span t-esc="o['BNET']"/>
+														</td>
+													</tr>
+												</t>
+											</t>
+										</t>
+									</t>
+									<td style="background-color:#B4FDF0; text-align:center; border-bottom: 1px solid #030303; color:#000000;" t-att-colspan="docs_len">
+										<h5 style="float:right;">
+											<b> Total: <span t-esc="total_net"/></b>
+										</h5>
+									</td>
+								</tbody>
+							</table>
+
+							<p><b>IN WORDS: <span t-esc="amount_to_text_bdt"/> Only</b></p>
+
+
+						</div>
+					</div>
+				</t>
+            </xpath>
+        </template>
+
+	</data>
+</odoo>

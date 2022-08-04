@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+	<data>
+
+		<record id="hr_employee_view_form" model="ir.ui.view">
+            <field name="name">employees info</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//page[@name='public']/group/group/field[@name='department_id']" position="before">
+                    <field name="employee_type"/>
+                </xpath>
+
+                <xpath expr="//page[@name='public']/group/group/field[@name='job_id']" position="after">
+                    <field name="manager"/>
+                </xpath>
+                <!-- Hide Contact Information. -->
+<!--                <xpath expr="//page[@name='personal_information']/group/group[2]" position="replace"/>-->
+                <xpath expr="//page[@name='personal_information']/group/group[2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='public']/group/group[1]" position="replace">
+                    <group string="Official Information">
+                        <field name="address_id"
+                               context="{'show_address': 1}"
+                               options='{"always_reload": True, "highlight_first_line": True}'/>
+                        <field name="mobile_phone"/>
+                        <field name="work_location"/>
+                        <field name="work_email" widget="email"/>
+                        <field name="work_phone"/>
+                    </group>
+                </xpath>
+
+                <xpath expr="//page[@name='personal_information']/group/group[1]" position="after">
+                    <group string="Present Address">
+                        <field name="present_address"/>
+                        <field name="present_thana"/>
+                        <field name="present_city"/>
+                        <field name="present_division"/>
+                        <field name="present_postcode"/>
+                        <field name="present_country"/>
+                    </group>
+                    <group string="Emergency Contact">
+                        <field name="emer_contact_name"/>
+                        <field name="relation"/>
+                        <field name="phone"/>
+                        <field name="alt_phone"/>
+                        <field name="email"/>
+                    </group>
+                    <group string="Permanent Address">
+                        <field name="permanent_address"/>
+                        <field name="permanent_thana"/>
+                        <field name="permanent_po"/>
+                        <field name="permanent_city"/>
+                        <field name="permanent_division"/>
+                        <field name="permanent_postcode"/>
+                        <field name="permanent_country"/>
+                    </group>
+                </xpath>
+      <!--          <xpath expr="//page[@name='personal_information']" position="before">
+                    <page name="basic_information" string="Basic Information" groups="hr.group_hr_user">
+                        <group>
+                            <group>
+                                <field name="employee_pin"/>
+
+
+                                <field name="under_boss"/>
+                                <field name="function"/>
+
+
+                            </group>
+                            <group>
+
+                                <field name="birth_certificate"/>
+
+                                <field name="alt_phone"/>
+
+                                <field name="designation"/>
+
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//page[@name='personal_information']/group/group/field[@name='identification_id']" position="replace"/>   -->
+
+                <xpath expr="//page[@name='personal_information']/group/group/field[@name='bank_account_id']" position="replace">
+                    <field name="bank_account_id"/>
+                </xpath>
+
+                <xpath expr="//page[@name='personal_information']/group/group/field[@name='passport_id']" position="replace"/>
+
+                <xpath expr="//page[@name='personal_information']/group/group/field[@name='bank_account_id']" position="after">
+                    <field name="driving_licence" groups="hr.group_hr_user"/>
+                    <field name="passport_id" groups="hr.group_hr_user"/>
+                    <field name="tin_no"/>
+                    <field name="employee_nid" groups="hr.group_hr_user"/>
+                    <field name="employee_email"/>
+                    <field name="facebook"/>
+                    <field name="cell_phone"/>
+                </xpath>
+
+                <xpath expr="//page[@name='personal_information']/group/group/field[@name='marital']" position="after">
+                    <field name="blood"/>
+                    <field name="height"/>
+                   <field name="weight"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="hr_emp_tin_view_form2" model="ir.ui.view">
+            <field name="name">hr employee tin view form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="gbs_hr_employee.hr_emp_tin_view_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='tin_req']" position="replace">
+                        <field name="tin_req" invisible="1"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="hr_employee_view_form2" model="ir.ui.view">
+            <field name="name">hr employee view form2</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='place_of_birth']" position="replace"/>
+                    <xpath expr="//field[@name='children']" position="replace"/>
+                    <xpath expr="//field[@name='manager']" position="replace"/>
+                    <xpath expr="//field[@name='birthday']" position="before">
+                        <field name="place_of_birth"/>
+                        <field name="birth_certificate"/>
+                    </xpath>
+                    <xpath expr="//page[@name='hr_settings']/group/group[2]" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="hr_em_blood_view_form" model="ir.ui.view">
+            <field name="name">hr employee blood view form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_employee_blood_group.hr_em_view_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='blood']" position="replace"/>
+                </data>
+            </field>
+        </record>
+
+        <record id="hr_employee_seniority_form_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.form.seniority</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr_employee_seniority.hr_employee_view_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/field[@name='initial_employment_date']" position="before">
+                <field name="job_confirmation"/>
+            </xpath>
+            <xpath expr="//group[@name='active_group']" position="after">
+                <group string="Official Contact Details">
+                    <field name="user"/>
+                    <field name="mail"/>
+                    <field name="mobile_no"/>
+                    <field name="social_network"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+		
+	</data>
+</odoo>

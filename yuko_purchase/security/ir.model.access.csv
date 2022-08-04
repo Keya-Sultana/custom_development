@@ -1,0 +1,28 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_purchase_order_user,purchase.order,purchase.model_purchase_order,group_yuko_purchase_user,1,1,1,1
+access_purchase_order_approver,purchase.order,purchase.model_purchase_order,gbs_purchase_requisition.group_purchase_requisition_approver,1,0,0,0
+
+access_purchase_order_line_user,purchase.order.line user,purchase.model_purchase_order_line,group_yuko_purchase_user,1,1,1,1
+
+access_product_product_user,product.product,product.model_product_product,group_yuko_purchase_user,1,0,0,0
+access_stock_warehouse_orderpoint_purchase_user,stock.warehouse.orderpoint,stock.model_stock_warehouse_orderpoint,group_yuko_purchase_user,1,0,0,0
+
+access_purchase_requisition_users,purchase.requisition,purchase_requisition.model_purchase_requisition,group_yuko_purchase_user,1,1,1,0
+access_purchase_requisition_line_users,purchase.requisition.line,purchase_requisition.model_purchase_requisition_line,group_yuko_purchase_user,1,1,1,1
+access_purchase_requisition_type_users,purchase.requisition.type,purchase_requisition.model_purchase_requisition_type,group_yuko_purchase_user,1,1,1,0
+
+access_account_invoice_line_purchase_user,account_invoice.line purchase,account.model_account_invoice_line,group_yuko_purchase_user,1,1,1,1
+access_stock_picking_purchase_users,stock.picking,stock.model_stock_picking,group_yuko_purchase_user,1,1,1,1
+
+access_supplier_category_user,supplier.category,gbs_supplier.model_supplier_category,purchase.group_purchase_user,1,1,1,1
+access_supplier_category_manager,supplier.category,gbs_supplier.model_supplier_category,purchase.group_purchase_manager,1,1,1,1
+
+access_template_type_user,template.type,yuko_purchase.model_template_type,purchase.group_purchase_user,1,1,1,1
+access_template_type_manager,template.type,yuko_purchase.model_template_type,purchase.group_purchase_manager,1,1,1,1
+
+access_pr_from_where_wizard_validate,pr.from.where.wizard,yuko_purchase.model_pr_from_where_wizard,gbs_purchase_requisition.group_purchase_requisition_validator,1,1,1,0
+
+
+
+
+

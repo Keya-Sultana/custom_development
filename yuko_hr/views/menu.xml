@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<data>
+
+        <menuitem id="hr_manual_attendance.menu_manual_attendance" name="Manual Attendances" parent="hr_manual_attendance.menu_hr_manual_attendance"
+				  sequence="15" action="hr_manual_attendance.hr_manual_attendance" groups="base.group_user"/>
+
+        <menuitem id="menu_holiday_calendar" parent="calendar.mail_menu_calendar"
+			name="Holiday Calendar" sequence="15" action="gbs_hr_public_holidays.action_calendar_holiday_view" />
+
+        <!-- Employee Payslip Menu -->
+
+        <menuitem
+            action="hr_payroll.action_view_hr_payslip_form"
+            id="menu_view_hr_payslip"
+            parent="hr.menu_hr_root"
+            sequence="38"
+            groups="base.group_user"/>
+
+    </data>
+</odoo>

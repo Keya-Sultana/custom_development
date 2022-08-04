@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="inherit_report_provident_fund_unit_wise" inherit_id="gbs_hr_payroll.report_provident_fund_unit_wise">
+            <xpath expr="//t/t" position="replace">
+                <t t-call="yuko_report_layout.external_layout">
+                    <div class="page" style="page-break-inside:auto">
+                        <div class="row"><br/><br/>
+                            <div class="clearfix">
+                                <h3 class="report-title">Monthly Employee Fund</h3>
+                                <h4>
+                                    <label>Description</label>
+                                    :
+                                    <span t-esc="data['name']"/>
+                                </h4>
+                            </div>
+                            <table class="table table-bordered table-report-xs table-striped"
+                                   style="margin-bottom: 10px;">
+                                <thead>
+                                    <tr class="odo-bg-gray">
+                                        <th >SN</th>
+                                        <th>Employee</th>
+                                        <th>Designation</th>
+                                        <th style="min-width:60px">D.O.J</th>
+                                        <th style="min-width:60px">Employee ID</th>
+                                        <t t-foreach="rules" t-as="r">
+                                            <t t-if="r['code']== 'EPMF'">
+                                                <th>
+                                                    <span t-esc="r['name']"></span>
+                                                </th>
+                                            </t>
+                                        </t>
+                                        <th>Total PF</th>
+                                        <th style="min-width:90px">Signature</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="amount_total" t-value="0"/>
+                                    <t t-foreach="docs" t-as="k">
+                                        <t t-if="k['val']">
+                                            <td class="odo-bg-info" t-att-colspan="docs_len" style="padding-left:15px">
+                                                <strong t-esc="k['name']"></strong>
+                                            </td>
+
+                                            <t t-foreach="k['val']" t-as="o">
+                                                <tr style="height:1cm">
+                                                    <td>
+                                                        <span t-esc="o['sn']"></span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="text-nowrap" t-esc="o['emp_name']"></span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="text-nowrap" t-esc="o['designation']"></span>
+                                                    </td>
+                                                    <td>
+                                                        <span t-esc="o['doj']"></span>
+                                                    </td>
+                                                    <td>
+                                                        <span t-esc="o['device_employee_acc']"></span>
+                                                    </td>
+                                                    <t t-foreach="rules" t-as="r">
+                                                        <t t-if="r['code'] == 'EPMF'">
+                                                            <td class="text-right">
+                                                                <span t-esc="o[r['code']]"></span>
+                                                            </td>
+                                                        </t>
+                                                    </t>
+                                                    <td class="text-right">
+                                                        <span class="text-nowrap" t-esc="o['total_pf']"></span>
+                                                        <t t-set="amount_total" t-value="amount_total + o['total_pf']"/>
+                                                    </td>
+                                                    <td>
+
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                    </t>
+                                    <tr style="page-break-inside: avoid">
+                                        <t t-if="data['type'] != '1'">
+                                            <td colspan="5" class="text-right">Total</td>
+                                            <t t-foreach="rules" t-as="r">
+                                                <t t-if="r['code']== 'EPMF'">
+                                                    <td class="text-right">
+                                                        <strong class="text-nowrap"
+                                                                t-esc="row_total[r['code']]"></strong>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <strong class="text-nowrap" t-esc="amount_total"></strong>
+                                                    </td>
+                                                </t>
+                                            </t>
+                                        </t>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <t t-call="report_layout.report_signing"></t>
+                    </div>
+                </t>
+            </xpath>
+        </template>
+
+        <record id="report_layout.paperformat_backend_landscape" model="report.paperformat">
+            <field name="name">Custom Landscape Report</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">27</field>
+            <field name="margin_bottom">20</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">25</field>
+            <field name="dpi">90</field>
+        </record>
+
+    </data>
+</odoo>

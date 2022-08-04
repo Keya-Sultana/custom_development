@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+     <record id="inherit_final_settlement_form_view1" model="ir.ui.view">
+         <field name="name">final.settlement.form.view yuko1</field>
+         <field name="model">final.settlement</field>
+         <field name="inherit_id" ref="hr_employee_exit.final_settlement_form_view"/>
+         <field name="arch" type="xml">
+             <button name="action_approved" position="replace">
+                 <button string="Validate" name="action_approved" groups="gbs_hr_security.group_hr_director,hr.group_hr_manager"
+                                attrs="{'invisible': [('state','not in',['confirm'])]}"
+                                type="object" class="oe_highlight"/>
+             </button>
+             <button name="action_done" position="replace">
+                 <button string="Approved" name="action_done"
+                                attrs="{'invisible': [('state','not in',['approved'])]}"
+                                type="object" class="oe_highlight" invisible="True"/>
+             </button>
+             <button name="action_reset" position="replace">
+                 <button string="Reset to Draft" name="action_reset"
+                                attrs="{'invisible': [('state','not in',['confirm'])]}"
+                                type="object"/>
+             </button>
+             <xpath expr="//notebook" position="replace">
+                <notebook>
+                    <page string ="Payments">
+                        <field name="payment_ids" nolabel="1" attrs="{'readonly':[('state','!=','draft')]}">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string ="Deductions">
+                        <field name="deduction_ids" nolabel="1" attrs="{'readonly':[('state','!=','draft')]}">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+         </field>
+     </record>
+
+
+     <menuitem
+				name="Full &amp; Final Settlement" groups ="hr.group_hr_manager,hr.group_hr_user"
+				id="hr_employee_exit.final_settlement_menu"
+                parent="hr_employee_exit.menu_exit_management"
+				sequence="21"
+                action="hr_employee_exit.action_final_settlement"
+        />
+
+    </data>
+</odoo>

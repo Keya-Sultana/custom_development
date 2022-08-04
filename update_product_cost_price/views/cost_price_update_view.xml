@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+    	<!-- product.cost.update Tree View  -->
+    
+	    <record model="ir.ui.view" id="product_cost_update_view">
+	        <field name="name">Product Cost Update</field>
+	        <field name="model">product.cost.update</field>
+	        <field name="arch" type="xml">
+	           <tree string="Product Cost Update">
+	              <field name="name"/>
+	              <field name="date"/>
+	           </tree>
+	        </field>
+	    </record>
+	    
+	    <!-- Product Cost Update Line Tree View  -->
+    
+    <record model="ir.ui.view" id="petty_cash_disbursement_view">
+        <field name="name">Product Cost Update Line</field>
+        <field name="model">product.cost.update.line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+           <tree string=" Product Cost Update Line ">
+              <field name="product_id"/>
+              <field name="old_cost_price"/>
+              <field name="new_cost_price"/>
+           </tree>
+        </field>
+    </record>
+	    
+	    <!-- Product Cost Update Form View -->
+    
+    <record id="product_cost_update_form" model="ir.ui.view">
+            <field name="name">Product Cost Update</field>
+            <field name="model">product.cost.update</field>
+            <field name="arch" type="xml">
+                <form string=" Product Cost Update Form">
+                	<header>
+						<button name="action_validate" type="object" string="Validate" class="oe_highlight" states="confirm"/>
+						<button name="action_confirm" type="object" string="Confirm" 
+								class="oe_highlight" states="draft"/>
+						<field name="state" widget="statusbar"/>
+				  </header>
+                  <sheet>
+                  <group>
+                   	<group>
+                  		 <field name="name" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+                   	</group>
+                   	<group>
+                   		<field name="date" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+                   	</group>
+                   	</group>
+                   	<notebook>
+                        <page string="Products">
+                          <field name="line_ids" nolabel="1" widget="one2many_list" attrs="{'readonly': [('state','not in',('draft'))]}">
+                            <tree string="Product Cost Update Line" editable="bottom">
+                            	<field name="product_id"/>
+              					<field name="old_cost_price"/>
+              					<field name="new_cost_price"/>
+	                        </tree>
+	                      </field>
+                        </page>
+                      </notebook>
+                  </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_cost_update_tree" model="ir.actions.act_window">
+            <field name="name">Product Cost Price Adjustment</field>
+            <field name="res_model">product.cost.update</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="product_cost_update_view"/>
+        </record>
+        
+        <menuitem action="action_cost_update_tree" id="menu_action_cost_update_tree" sequence="32"
+        			string="Product Cost Price Adjustment" parent="stock.menu_stock_inventory_control"/>
+
+    </data>
+</openerp>

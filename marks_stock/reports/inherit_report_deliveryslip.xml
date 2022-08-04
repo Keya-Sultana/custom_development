@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+	<template id="report_marks_delivery_document" inherit_id="stock.report_delivery_document">
+		<xpath expr="//div[@class='page']" position="replace">
+		<div class="page">
+                    <div class="row" name="customer_address">
+                        <div class="col-xs-4 pull-right">
+                            <div>
+                                <span><strong>Customer Address:</strong></span>
+                            </div>
+                            <div t-if="o.partner_id" name="partner_header">
+                                <div t-field="o.move_lines[0].partner_id"
+                                   t-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": True}'/>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>
+                        <span t-field="o.name"/>
+                    </h2>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th t-if="o.origin"><strong>Order (Origin)</strong></th>
+                                <th name="td_sched_date_h">
+                                    <strong>Date</strong>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td t-if="o.origin">
+                                    <span t-field="o.origin"/>
+                                </td>
+                                <td name="td_sched_date">
+                                   <t t-if="o.state == 'done'">
+                                        <span t-field="o.date_done"/>
+                                   </t>
+                                   <t t-if="o.state != 'done'">
+                                        <span t-field="o.min_date"/>
+                                   </t>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <xpath expr="//table[@class='table table-condensed mt48']" position="replace">
+                    <t t-set="backorder" t-value="False"/>
+			<table border="1" class="table table-condensed mt48" t-if="o.pack_operation_ids" style="border-style:solid">
+				<thead>
+					<tr>
+						<th style="border: 1px solid black" class="text-center">Item No</th>
+						<th style="border: 1px solid black" class="text-center">Description</th>
+						<th style="border: 1px solid black" class="text-center">Ordered Quentity</th>
+						<th t-if="any([pack_operation.state == 'done' for pack_operation in o.pack_operation_ids])" style="border: 1px solid black" class="text-center">Delivery Quentity</th>
+					</tr>
+				</thead>
+				<tbody class="delivery_items_tbody">
+					<tr t-foreach="o.pack_operation_ids" t-as="pack_operation">
+						<td style="border: 1px solid black" class="text-center">
+                           <t t-set="pack_operation_index" t-value="pack_operation_index + 1"/>
+							<span t-esc="pack_operation_index"/>
+						</td>
+						<td style="border: 1px solid black" class="text-center">
+							<span t-field="pack_operation.product_id"/>
+                            <t t-if="not pack_operation.product_id and pack_operation.package_id">
+                            	<span  t-field="pack_operation.package_id"/>
+                            </t>
+						</td>
+						<td style="border: 1px solid red" class="text-center">
+							<span t-if="pack_operation.package_id">:</span>
+                            <span t-field="pack_operation.package_id"/>
+                            <span t-field="pack_operation.ordered_qty"/>
+                            <span t-field="pack_operation.product_uom_id"/>
+						</td>
+						<td style="border: 1px solid black" class="text-center" t-if="pack_operation.state == 'done'">
+							<t t-if="pack_operation.ordered_qty != pack_operation.qty_done">
+                            	<t t-set="backorder" t-value="True"/>
+                            </t>
+                            <span t-field="pack_operation.qty_done"/>
+                            <span t-field="pack_operation.product_uom_id"/>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</xpath>
+                    
+                    <br />
+                    <p>Marks Automation Ltd</p>
+		<br />
+		<br/>
+		<br/>
+		
+		<div class="row">
+	    	<div class="col-xs-4">
+	        	<p class="text-left">
+	        		<strong>_____________________</strong><br/>
+	            	<strong >Authoried Signature</strong>
+	           	</p>
+	        </div>
+	        <div class="col-xs-4">
+	        	<p class="text-center">
+	        		
+	           	</p>
+	        </div>
+	  		<div class="col-xs-4">
+	        	<p class="text-center">
+	        		<strong>_____________________</strong><br/>
+	            	<strong>Receiver Signature</strong>
+	            </p>
+	        </div>
+	    </div>
+              </div>      
+		</xpath>
+	</template>
+
+</data>
+</odoo>

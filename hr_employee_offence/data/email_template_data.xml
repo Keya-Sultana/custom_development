@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="1">
+
+         <record id="email_template" model="mail.template">
+            <field name="name">EMAIL TEMPLATE</field>
+            <field name="model_id" ref="hr_employee_offence.model_hr_employee_offence"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="email_from">${(object.create_uid.email and '%s &lt;%s&gt;' % (object.create_uid.name, object.create_uid.email) or '')|safe}</field>
+            <field name="email_to">${object.employee_id.work_email}</field>
+            <field name="subject">Your badge for ${object.name}</field>
+            <field name="body_html"><![CDATA[
+         <p>Dear ${(object.employee_id.name)},<br/><br/>
+         Good job, you've just created your first e-mail template!<br/></p>
+              Regards,<br/>
+              ${(object.name)} ]]></field>
+        </record>
+    </data>
+</odoo>

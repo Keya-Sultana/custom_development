@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="inherit_report_individual_provident_fund" inherit_id="gbs_hr_payroll.report_individual_provident_fund">
+            <xpath expr="//t/t" position="replace">
+                <t t-call="yuko_report_layout.summary_layout">
+                    <div class="page" style="page-break-inside:auto">
+                        <br/><br/><br/>
+                        <div class="row">
+                            <div class="clearfix">
+                                <h4 class="report-title">Employee Fund Details</h4>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-xs-9 text-left">
+                                        <h6><b>Employee Name :  </b><span t-esc="employee_id"/></h6>
+                                        <h6><b>Department :  </b><span t-esc="department_id"/></h6>
+                                        <h6><b>Job Title :  </b><span t-esc="job_id"/></h6>
+                                    </div>
+                                    <div class="col-xs-3 text-left">
+                                        <h6><b>Employee ID :  </b><span t-esc="device_employee_acc"/></h6>
+                                        <h6><b>D.O.J :  </b><span t-esc="initial_employment_date"/></h6>
+                                        <h6><b>Initial EF Amount :  </b><span t-esc="init_pf"/></h6>
+                                        <h6><b>Total EF :  </b><span t-esc="total_pf"/></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table table-bordered table-report-xs table-striped"
+                                   style="margin-bottom: 10px;">
+                            <thead>
+                                <tr class="odo-bg-gray">
+                                    <th>SN</th>
+                                    <th>Payslip Name</th>
+                                    <th>Date</th>
+                                    <th>Employee EF Contribution (5%)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="lists" t-as="l">
+                                    <tr style="page-break-inside: avoid">
+                                        <td><span t-esc="l_index+1"/></td>
+                                        <td><span t-esc="l['name']"/></td>
+                                        <td><span t-esc="l['date']"/></td>
+                                        <td class="text-right"><span t-esc="l['pf']"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                </t>
+
+            </xpath>
+        </template>
+
+        <record id="report_layout.paperformat_backend_portrait" model="report.paperformat">
+            <field name="name">Custom Potrait Reports</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">25</field>
+            <field name="margin_bottom">35</field>
+            <field name="margin_left">15</field>
+            <field name="margin_right">15</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">25</field>
+            <field name="dpi">90</field>
+        </record>
+
+    </data>
+</odoo>

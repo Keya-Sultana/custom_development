@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+		<!-- Definition of the report -->
+		<report id="report_salary_increment"
+				model="hr.contract"
+				string="Print Salary Increment"
+				name="yuko_hr_contract.report_salary_increment_letter_qweb"
+				file="yuko_hr_contract.report_salary_increment_letter_qweb"
+				report_type="qweb-pdf"
+                menu="False"
+				paperformat="yuko_hr_contract.Yuko_pad_paperformat"
+        />
+
+		<!-- Main template -->
+		<template id="report_salary_increment_letter_qweb">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+				<t t-name="report.external_layout">
+					<div class="page">
+					<br/>
+						<div class="text-left">
+							<b><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></b>
+							<br/><br/>
+							<span t-field="o.employee_id.name"/><br/>
+							<span t-field="o.job_id"/><br/>
+							<span t-field="o.department_id.name"/>
+						</div>
+						<br/><br/><br/>
+
+						<b> Sub: Salary Increment Letter. </b><br/><br/><br/>
+
+						Dear  <span t-field="o.employee_id.name"/>, <br/><br/>
+
+						Based on your last performance review, we have decided to award you a salary increment will be effective from respective date mentioned in new contract and your new salary will be as per attached contract along with this letter.
+						<br/><br/>
+						This well-deserved increment is the fruit of your hard work and dedication. We are always keen to keep committed employees happy and satisfied. We also believe that this will give you an incentive to perform even better.
+						<br/><br/>
+						Congratulations and thank you.
+						<br/><br/><br/><br/><br/>
+
+
+						Sincerely,
+
+						<p><span t-raw="user.signature"/></p>
+
+
+						<p style="margin-top: 30%;"><b>Attached Documents: Employee Contract</b></p>
+
+
+					</div>
+				</t>
+				</t>
+			</t>
+		</template>
+
+
+	</data>
+</odoo>

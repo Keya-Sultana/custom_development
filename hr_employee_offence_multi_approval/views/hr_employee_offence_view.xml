@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+		<record id="view_employee_offence_form" model="ir.ui.view">
+			<field name="name">Hr Employee Offence</field>
+			<field name="model">hr.employee.offence</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="hr_employee_offence.employee_offence_form" />
+			<field name="arch" type="xml">
+				<button name="action_valid" position="replace">
+					<button string="Validate" name="action_validate" states="confirm"
+						type="object" class="oe_highlight" groups="hr.group_hr_manager"/>
+				</button>
+				<button name="action_confirm" position="after">
+					<field name="current_user_is_approver" invisible="True" />
+					<button string="Approve" name="btn_action_approve" type="object"
+						attrs="{'invisible': ['|', ('current_user_is_approver', '!=', True),('state', '!=', 'confirm')]}"
+						class="oe_highlight" />
+				</button>
+				<field name="remaining_offence_amount" position="after">
+					<field name="pending_approver" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+				</field>
+				<xpath expr="//notebook/page[1]" position="after">
+					<page string="Approbations">
+						<field name="approbations">
+							<tree>
+								<field name="approver_id" />
+								<field name="date" />
+							</tree>
+						</field>
+					</page>
+				</xpath>
+			</field>
+		</record>
+
+
+		
+	</data>
+</odoo>

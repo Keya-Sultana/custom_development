@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+	<!-- inherit external layout header
+
+	<template id="report_payslip_header" inherit_id="report.external_layout_header">
+        <xpath expr="//div/div[@class='row']" position="replace">
+            <div class="row">
+            	<div class="col-xs-3">
+                	<img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 65px; max-width: 110px"/>
+            	</div>
+            	<div class="col-xs-9 text-right" style="margin-top:40px;" t-field="company.rml_header1"/>
+        	</div>
+        </xpath>
+    </template>  -->
+
+	<!-- menu hide -->
+
+	<report
+        id="hr_payroll.payslip_details_report"
+        model="hr.payslip"
+		string="PaySlip Details"
+		report_type="qweb-pdf"
+		name="hr_payroll.report_payslipdetails"
+		file="hr_payroll.report_payslipdetails"
+        menu="False"
+    />
+
+	<template id="inherit_report_payslip_document" inherit_id="gbs_hr_payroll.inherit_report_payslip">
+		<xpath expr="//t[@t-call='report.external_layout']" position="replace">
+                <t t-call="yuko_report_layout.purchase_layout">
+                    <div class="page">
+                        <br/>
+                        <h2 style="margin-top:20px;">Pay Slip</h2><br/>
+                        <h3><span t-field="o.name"/></h3>
+
+                        <table class="table table-condensed table-bordered">
+                            <tr>
+                                <td><strong>Name</strong></td>
+                                <td><span t-field="o.employee_id.name"/></td>
+                                <td><strong>Designation</strong></td>
+                                <td><span t-field="o.employee_id.job_id"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Employee Id</strong></td>
+                                <td><span t-field="o.employee_id.identification_id"/></td>
+                                <td><strong>Department</strong></td>
+                                <td><span t-field="o.employee_id.department_id"/></td>
+                            </tr>
+							<tr>
+								<td><strong>Address</strong></td>
+								<td colspan="3">
+									<span t-field="o.employee_id.present_address"/>,
+									<span t-field="o.employee_id.present_thana"/>,
+									<span t-field="o.employee_id.present_city"/>-<span t-field="o.employee_id.present_postcode"/>,
+									<span t-field="o.employee_id.present_country"/>.
+								</td>
+							</tr>
+							<tr>
+								<td><strong>Tin No</strong></td>
+								<td><span t-field="o.employee_id.tin_no"/></td>
+								<td><strong>Joining Date</strong></td>
+								<td><span t-field="o.employee_id.initial_employment_date"/></td>
+							</tr>
+							<!--<tr>-->
+								<!--<td><strong>Number of Days</strong></td>-->
+								<!--<td><span t-field="o.worked_days_line_ids.number_of_days"/></td>-->
+								<!--<td><strong>Official Id</strong></td>-->
+								<!--<td><span t-field="o.employee_id.identification_id"/></td>-->
+							<!--</tr>-->
+							<tr>
+								<td><strong>Reference</strong></td>
+								<td><span t-field="o.number"/></td>
+								<td><strong>Bank Account</strong></td>
+								<td><span t-field="o.employee_id.bank_account_id"/></td>
+							</tr>
+							<tr>
+								<td><strong>Date From</strong></td>
+								<td><span t-field="o.date_from"/></td>
+								<td><strong>Date To</strong></td>
+								<td><span t-field="o.date_to"/></td>
+							</tr>
+                            <tr>
+                                <td><strong>Email</strong></td>
+                                <td><span t-field="o.employee_id.work_email"/></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                        </table><br/>
+
+						<table class="table table-condensed">
+                            <thead>
+                                <tr>
+									<th>Description</th>
+                                    <th>Number of Days</th>
+                                    <th>Number of Hours</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr t-foreach="o.worked_days_line_ids.filtered(lambda line: line.number_of_days>0 or line.number_of_hours>0)" t-as="line">
+                                    <td><span t-field="line.name"/></td>
+									<td><span t-field="line.number_of_days"/></td>
+									<td><span t-field="line.number_of_hours"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
+                                    <td><span t-field="line.name"/></td>
+                                    <td><span t-esc="'{0:,.2f}'.format(abs(line.total))"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <br/><br/><br/>
+                        <p class="text-center"><b>Note: This is system generated payslip. No signature is required.</b></p>
+
+
+						<br/><br/><br/><br/><br/><br/><br/>
+
+
+					</div>
+                </t>
+            </xpath>
+
+	</template>
+
+</data>
+</odoo>

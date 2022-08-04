@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- Purchase Order Tree -->
+
+    <record id="purchase_order_tree_yuko" model="ir.ui.view">
+        <field name="name">Purchase Order Tree</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="replace">
+                <tree decoration-bf="message_unread==True" decoration-muted="state=='cancel'" decoration-info="state in ('wait','confirmed')" string="Purchase Order"
+                    colors="purple:state == 'to approve';orange:state == 'sent';brown:state == 'done';green:state == 'purchase';red:state == 'cancel';">
+                    <field name="message_unread" invisible="1"/>
+                    <field name="name" string="Reference"/>
+                    <field name="date_order" />
+                    <field name="partner_id"/>
+                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                    <field name="date_planned" invisible="context.get('quotation_only', False)"/>
+                    <field name="origin"/>
+                    <field name="amount_untaxed" sum="Total Untaxed amount" string="Untaxed" widget="monetary"/>
+                    <field name="amount_total" sum="Total amount" widget="monetary"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="state"/>
+                    <field name="invoice_status" invisible="not context.get('show_purchase', False)"/>
+                </tree>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Purchase Order Form view-->
+
+    <record id="purchase_order_yuko_form" model="ir.ui.view">
+        <field name="name">purchase.order.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+<!--            <xpath expr="//button[@name='button_confirm' and @states='draft']" position="replace">-->
+<!--                <button name="button_confirm" type="object" states="draft"-->
+<!--                        groups="purchase.group_purchase_manager,purchase.group_purchase_user"-->
+<!--                        string="Confirm Order" id="draft_confirm"/>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//button[@name='button_confirm' and @states='sent']" position="replace">-->
+<!--                <button name="button_confirm" type="object" states="sent"-->
+<!--                        groups="purchase.sudo apt install software-properties-common,purchase.group_purchase_user"-->
+<!--                        string="Confirm Order" class="oe_highlight" id="bid_confirm"/>-->
+<!--            </xpath>-->
+<!--            <button name="button_confirm" position="replace">-->
+<!--                <button name="button_confirm" type="object" states="draft" string="Confirm Order" id="draft_confirm" groups="purchase.group_purchase_manager,purchase.group_purchase_user"/>-->
+<!--                <button name="button_confirm" type="object" states="sent" string="Confirm Order" class="oe_highlight" id="bid_confirm" groups="purchase.group_purchase_manager,purchase.group_purchase_user"/>-->
+<!--            </button>-->
+            <button name="action_view_picking" position="replace">
+                <button name="action_view_picking" string="Receive Products" class="oe_highlight" type="object" invisible="True"
+                        attrs="{'invisible': ['|', '|' , ('is_shipped', '=', True), ('state','not in', ('purchase','done')), ('picking_count', '=', 0)]}"/>
+            </button>
+            <xpath expr="//field[@name='date_order']" position="before">
+                <field name="employee_id" options='{"no_open": True,"no_create": 1, "no_create_edit": 1}'/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="partner_attention_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]" options='{"no_open": True,"no_create": 1, "no_create_edit": 1}'/>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page/group/group/field[@name='payment_term_id']" position="after">
+                <field name="payment_type"/>
+                <field name="method_type"/>
+                <field name="port_type"/>
+            </xpath>
+        </field>
+    </record>
+
+
+
+    <record id="inherite_purchase_order_form" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherite</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[1]" position="after">
+                <page string="Terms &amp; Condition">
+                    <group>
+                        <field name="template_type"/>
+                        <field name="ter_condition"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+        <record id="purchase_order_form_inherit_yuko" model="ir.ui.view">
+            <field name="name">purchase.order.view.form1</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase_requisition.purchase_order_form_inherit"/>
+            <field name="arch" type="xml">
+                <field name="requisition_id" position="replace">
+                    <field name="requisition_id"
+                        domain="[('state', 'in', ('progress', 'open')), ('vendor_id', 'in', (partner_id, False))]"/>
+                </field>
+            </field>
+        </record>
+
+    <record id="inherit_gbs_purchase_order_form" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit gbs</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="gbs_purchase_order.inherit_purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/header/button[@name='action_rfq_send']" position="replace">
+                <button name="action_rfq_send" states="draft" string="Send RFQ by Email" type="object" context="{'send_rfq':True}" class="oe_highlight"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_gbs_purchase_req_order_form" model="ir.ui.view">
+        <field name="name">purchase.req.order.form.inherit1</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="gbs_purchase_order.purchase_req_order_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[3]" position="replace">
+                <page string="Terms &amp; Condition" invisible="1">
+                    <field name="terms_condition" widget="html" options="{'style-inline': true}"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+<!--    <record id="inherite_purchase_order_form2" model="ir.ui.view">-->
+<!--        <field name="name">purchase.order.form.inherite2</field>-->
+<!--        <field name="model">purchase.order</field>-->
+<!--        <field name="inherit_id" ref="purchase.purchase_order_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//notebook/page[6]" position="replace">-->
+<!--                <page string="Revisions" invisible="1">-->
+<!--                    <field name="old_revision_ids" invisible="1"/>-->
+<!--                    <group attrs="{'invisible': [('active', '=', True)]}" invisible="1">-->
+<!--                        <field name="current_revision_id"/>-->
+<!--                        <field name="active" invisible="1"/>-->
+<!--                    </group>-->
+<!--                </page>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <!-- Invisible menu for configuration of Purchase
+
+        <record id="make_invisible_agreement_type" model="res.groups">
+			<field name="name">Invisible menu for Purchase Agreement Types</field>
+		</record>
+
+        <record id="purchase_requisition.menu_purchase_requisition_type" model="ir.ui.menu">
+			<field name="groups_id" eval="[(6,0,[ref('yuko_purchase.make_invisible_agreement_type')])]" />
+		</record>   -->
+
+</odoo>

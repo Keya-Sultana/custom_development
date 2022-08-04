@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- Top menu item -->
+        <menuitem name="Purchases"
+            id="purchase.menu_purchase_root"
+            groups="purchase.group_purchase_manager,purchase.group_purchase_user,group_yuko_purchase_user"
+            web_icon="purchase,static/description/icon.png"
+            sequence="25"/>
+
+        <menuitem
+                id="purchase_requisition.menu_purchase_requisition_pro_mgt"
+                sequence="1"
+                name="Purchase Requisition"
+                parent="purchase.menu_procurement_management"
+                action="purchase_requisition.action_purchase_requisition"
+                groups="stock.group_stock_user,gbs_purchase_requisition.group_purchase_requisition_validator,group_yuko_purchase_user,purchase.group_purchase_user,purchase.group_purchase_manager"/>
+
+    <menuitem
+                name="Products"
+                id="purchase.menu_procurement_partner_contact_form"
+                action="purchase.product_normal_action_puchased"
+                parent="gbs_purchase_requisition.menu_procurement_management_product_root" sequence="1"
+                groups="product.group_product_variant,group_yuko_purchase_user,purchase.group_purchase_user,purchase.group_purchase_manager"/>
+
+    <menuitem
+                name="Product Variants"
+                id="purchase.product_product_menu"
+                action="purchase.product_product_action"
+                parent="gbs_purchase_requisition.menu_procurement_management_product_root" sequence="2"
+                groups="product.group_product_variant,group_yuko_purchase_user,purchase.group_purchase_user,purchase.group_purchase_manager"/>
+
+    <!-- Purchase Control Menu
+    <menuitem id="purchase.menu_purchase_control" name="Control" parent="purchase.menu_purchase_root" sequence="4"
+        groups="purchase.group_purchase_manager,purchase.group_purchase_user"/>  -->
+
+    <!--Inventory control-->
+    <menuitem action="stock.action_receipt_picking_move" id="purchase.menu_action_picking_tree_in_move"
+            parent="purchase.menu_purchase_control" sequence="11" groups="purchase.group_purchase_manager,purchase.group_purchase_user"/>
+
+    <!--Invoice control-->
+    <menuitem
+         id="purchase.menu_procurement_management_pending_invoice"
+         action="purchase.action_invoice_pending"
+         parent="purchase.menu_purchase_control"
+         sequence="13"
+        groups="purchase.group_purchase_manager,purchase.group_purchase_user"/>
+
+    <menuitem id="purchase.purchase_report" name="Reports" parent="purchase.menu_purchase_root" sequence="99"
+        action="purchase.action_purchase_order_report_all" groups="purchase.group_purchase_manager,purchase.group_purchase_user"/>
+
+    <menuitem id="purchase.menu_purchase_config" name="Configuration" parent="purchase.menu_purchase_root" sequence="100"
+              groups="purchase.group_purchase_manager,purchase.group_purchase_user"/>
+
+    <menuitem id="purchase.menu_purchase_general_settings" name="Settings" parent="purchase.menu_purchase_config"
+            sequence="0" action="purchase.action_purchase_configuration" groups="purchase.group_purchase_manager,purchase.group_purchase_user"/>
+
+    <menuitem
+        id="purchase_requisition.menu_purchase_requisition_type"
+        sequence="100"
+        parent="purchase.menu_purchase_config"
+        action="purchase_requisition.tender_type_action"
+        groups="purchase.group_purchase_manager,purchase.group_purchase_user"/>
+
+
+    <!-- Invisible menu for configuration of Purchase  -->
+
+        <record id="make_invisible_supplier_category" model="res.groups">
+			<field name="name">Invisible menu for Supplier Category</field>
+		</record>
+
+        <record id="gbs_supplier.menu_gbs_supplier_category" model="ir.ui.menu">
+			<field name="groups_id" eval="[(6,0,[ref('yuko_purchase.make_invisible_supplier_category')])]" />
+		</record>
+
+
+    <!-- Supplier Category Menu -->
+        <menuitem
+                id="gbs_supplier.menu_gbs_supplier_category"
+                sequence="1"
+                parent="purchase.menu_purchase_config"
+                action="gbs_supplier.action_gbs_supplier_category"
+                groups="purchase.group_purchase_manager,purchase.group_purchase_user"/>
+
+    <!-- Invisible menu for Purchase Control -->
+
+        <record id="make_invisible_purchase_control" model="res.groups">
+			<field name="name">Invisible menu for Purchase Control</field>
+		</record>
+
+        <record id="purchase.menu_purchase_control" model="ir.ui.menu">
+			<field name="groups_id" eval="[(6,0,[ref('yuko_purchase.make_invisible_purchase_control')])]" />
+		</record>
+
+</odoo>

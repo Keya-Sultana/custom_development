@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <menuitem id="gbs_hr_leave_forward_encash.hr_leave_carry_forward" name="Earn Leave Carry Forward"
+			parent="gbs_hr_leave_forward_encash.menu_hr_leave_carry_forward"
+			action="gbs_hr_leave_forward_encash.hr_leave_forward_encash" groups="hr_attendance.group_hr_attendance_user"/>
+
+        <menuitem id="gbs_hr_leave_forward_encash.hr_my_leave_carry_forward" name="My Earn Leave Carry Forward"
+			parent="gbs_hr_leave_forward_encash.menu_hr_leave_carry_forward"
+			action="gbs_hr_leave_forward_encash.my_leave_forward_encash" groups="base.group_user"/>
+    </data>
+</odoo>

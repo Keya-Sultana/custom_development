@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+		<!-- HR Employee Form View -->
+		<record id="inherit_view_employee_yuko_form" model="ir.ui.view">
+            <field name="name">inherit.hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <data>
+         <!--           <xpath expr="//div/h1" position="after">
+                        <div>
+                            <field name="employee_nickname" placeholder="Employee's Nick Name"/>
+                        </div>
+                    </xpath>  -->
+                    <h1 position="after">
+                    <label for="employee_nickname" class="oe_edit_only"/>
+                    <h3>
+                        <field name="employee_nickname"/>
+                    </h3>
+                </h1>
+                </data>
+            </field>
+        </record>
+
+		<!-- HR Employee Search View -->
+		<record id="inherit_view_employee_filter_yuko" model="ir.ui.view">
+            <field name="name">hr.employee.search</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_filter"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//search/field[@name='name']" position="after">
+                        <field name="employee_nickname"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+		
+	</data>
+</odoo>

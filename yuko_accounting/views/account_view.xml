@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.menu" id="account.menu_finance_configuration">
+            <field name="groups_id" eval="[(6,0,[ref('account.group_account_manager')])]"/>
+        </record>
+
+        <record id="inherit_crossovered_budget_view_form" model="ir.ui.view">
+            <field name="name">crossovered.budget.view.form</field>
+            <field name="model">crossovered.budget</field>
+            <field name="inherit_id" ref="account_budget.crossovered_budget_view_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//header/button[@name='action_budget_confirm']" position="replace">
+                        <button string="Confirm" name="action_budget_confirm" states="draft" type="object" class="oe_highlight"/>
+                    </xpath>
+
+                    <xpath expr="//header/button[@name='action_budget_cancel']" position="replace">
+                        <button string="Cancel Budget" name="action_budget_cancel" states="confirm,department_managers,audit,management" type="object"
+                                groups="gbs_application_group.group_dept_manager,yuko_employee_iou.group_audit,yuko_employee_iou.group_management,yuko_employee_iou.group_account_adviser"/>
+                    </xpath>
+
+                    <xpath expr="//header/button[@name='action_budget_validate']" position="replace"></xpath>
+                    <xpath expr="//header/button[@name='action_budget_done']" position="replace"></xpath>
+                    <xpath expr="//header/button[@name='action_budget_draft']" position="replace"></xpath>
+
+                    <xpath expr="//header/button[@name='action_budget_cancel']" position="before">
+                        <button name="action_approve_by_manager" string="Approve1" states="confirm" type="object" class="oe_highlight" groups="gbs_application_group.group_dept_manager"/>
+                        <button name="action_approve_by_audit" string="Approve2" states="department_managers" type="object" class="oe_highlight" groups="yuko_employee_iou.group_audit"/>
+                        <button name="action_approve_by_management" string="Approve3" states="audit" type="object" class="oe_highlight" groups="yuko_employee_iou.group_management"/>
+                        <button name="action_open" string="Open" states="management" type="object" class="oe_highlight" groups="yuko_employee_iou.group_account_adviser"/>
+                        <button name="action_close" string="Close" states="open" type="object" class="oe_highlight" groups="yuko_employee_iou.group_account_adviser"/>
+                    </xpath>
+
+                    <xpath expr="//sheet/group/group/field[@name='creating_user_id']" position="replace">
+                        <field name="employee_id" attrs="{'readonly':[('state','!=','draft')]}"
+								   options='{"no_open": True,"no_create": 1, "no_create_edit": 1}'/>
+                        <field name="creating_user_id" attrs="{'readonly':[('state','!=','draft')]}"
+                               options='{"no_open": True,"no_create": 1, "no_create_edit": 1}'/>
+                    </xpath>
+
+                    <xpath expr="//sheet/group/group/label[@for='date_from']" position="before">
+                        <field name="manager_id" string="Department Manager" readonly="1"/>
+                    </xpath>
+
+                    <xpath expr="//notebook/page/field/form/group/group/field[@name='analytic_account_id']" position="replace">
+                        <field name="analytic_account_id" groups="analytic.group_analytic_accounting" required="0"/>
+                    </xpath>
+
+                    <xpath expr="//notebook/page/field/tree/field[@name='paid_date']" position="replace">
+                    </xpath>
+                    <xpath expr="//notebook/page/field/form/group/group/field[@name='paid_date']" position="replace">
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="inherit_account_asset_asset_form" model="ir.ui.view">
+            <field name="name">account.asset.asset.form</field>
+            <field name="model">account.asset.asset</field>
+            <field name="inherit_id" ref="account_asset.view_account_asset_asset_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/group/group/field[@name='category_id']" position="after">
+                    <field name="sub_category_id"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

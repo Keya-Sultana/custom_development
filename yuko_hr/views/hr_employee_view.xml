@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_employee_update_pf_action" model="ir.actions.server">
+        <field name="name">Update PF Amount</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="state">code</field>
+        <field name="code">records.update_pf_amount()</field>
+    </record>
+
+    <record id="run_hr_employee_update_pf_action" model="ir.values">
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="name">Update PF Amount</field>
+        <field name="key2">client_action_multi</field>
+        <field name="key">action</field>
+        <field name="model">hr.employee</field>
+        <field name="value" eval="'ir.actions.server,' + str(ref('hr_employee_update_pf_action'))" />
+    </record>
+
+</odoo>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+	<data>
+		<record id="inherit_view_quotation_tree" model="ir.ui.view">
+            <field name="name">sale.order.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="replace">
+                    <tree string="Quotation" class="o_sale_order" decoration-info="state == 'draft'" colors="purple:state == 'sent';brown:state == 'sale';green:state == 'done';red:state == 'cancel';">
+                        <field name="message_needaction" invisible="1"/>
+                        <field name="name" string="Quotation Number"/>
+                        <field name="date_order"/>
+                        <field name="partner_id"/>
+                        <field name="user_id"/>
+                        <field name="amount_total" sum="Total Tax Included" widget="monetary"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="state"/>
+                    </tree>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="customized_sale_order_form_view1" model="ir.ui.view">
+            <field name="name">customized_sale_order_form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//button[@name='action_confirm' and @states='draft']" position="replace">
+                        <button name="action_confirm"
+                                string="Confirm Sale"
+                                states="draft"
+                                groups="sales_team.group_sale_manager"
+                                type="object"
+                                class="o_sale_confirm"/>
+                    </xpath>
+                    <xpath expr="//button[@name='action_confirm' and @states='sent']" position="replace">
+                        <button name="action_confirm" states="sent" string="Confirm Sale"
+                                groups="sales_team.group_sale_manager"
+                                class="btn-primary o_sale_confirm" type="object" />
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+		<!-- Definition of the report -->
+		<report id="report_gate_pass"
+				model="stock.gate.out"
+				string="Gate Pass Report"
+				name="yuko_inventory.report_gate_pass_qweb"
+				file="yuko_inventory.report_gate_pass_qweb"
+				report_type="qweb-pdf"
+        />
+
+		<!-- Main template -->
+		<template id="report_gate_pass_qweb">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+				<t t-call="yuko_report_layout.purchase_layout">
+					<div class="page">
+                        <div class="row">
+                            <style type="text/css">
+                                .report-title { text-align:center; }
+                                .odo-bg-gray, .odo-bg-gray > td { background-color: #B4FDF0; }
+                            </style>
+                            <div class="clearfix">
+                                <h3 class="report-title" style="text-decoration: underline; margin-top:30px; margin-bottom:30px;">Gate Pass Report</h3>
+                            </div>
+
+
+                            <table class="table table-condensed table-bordered">
+                                <tr>
+                                    <td><strong>Gate pass num :</strong></td>
+                                    <td style="width:25%;"> <span t-field="o.name"/> </td>
+                                    <td style="width:15%;"></td>
+                                    <td><strong>Date &amp; Time :</strong></td>
+                                    <td style="width:20%;"> <span t-field="o.date"/> </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Gate Pass Type:</strong></td>
+                                    <td style="width:25%;"> <span t-field="o.receive_type"/></td>
+                                    <td style="width:15%;"></td>
+                                    <td><strong>Issued to :</strong></td>
+                                    <td style="width:25%;"> <span t-field="o.issue_id"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Generate by :</strong></td>
+                                    <td style="width:25%;"><span t-field="o.employee_id.name"/> </td>
+                                    <td style="width:15%;"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Department:</strong></td>
+                                    <td style="width:25%;"> <span t-field="o.depart_id.name"/></td>
+                                    <td style="width:15%;"></td>
+                                    <td><strong>Inventory Out No:</strong></td>
+                                    <td style="width:20%;"> <span t-field="o.inventory_outno"/></td>
+                                </tr>
+                            </table><br/>
+
+
+                            <table class="table table-bordered table-report-xs table-striped"
+                                        style="margin-bottom: 10px; table-layout: fixed;">
+								<thead>
+									<tr style="background-color:#B4FDF0;
+												border-bottom: 1px solid #030303;">
+                                        <th class="text-center" style="width:6%;">SL</th>
+                                        <th class="text-center" style="width:10%;">Item</th>
+                                        <th class="text-center" style="width:10%;">UOM</th>
+                                        <th class="text-center" style="width:8%;">QTY</th>
+                                        <th class="text-center" style="width:20%;">Remarks</th>
+									</tr>
+								</thead>
+								<tbody>
+                                    <tr t-foreach="o.out_line_ids" t-as="line">
+                                        <td class="text-center">
+                                            <span t-esc="line_index+1"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-field="line.product_id.name"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-field="line.product_uom.name"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-field="line.product_qty"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-field="line.remark"/>
+                                        </td>
+                                    </tr>
+
+								</tbody>
+							</table>
+                            <br/>
+
+                            <p><b>Note:</b></p>
+							<p> <span t-field="o.gate_out_note"/></p><br/><br/>
+
+                            <p><b>N. B.  Above mentioned items are allowed to leave Factory.</b></p><br/><br/>
+
+                            <div class="row">
+                                    <div class="col-xs-3" style="display:inline; text-decoration:overline;">
+                                        <h6 class="text-center"><b> Prepared by </b></h6>
+                                    </div>
+                                    <div class="col-xs-3" style="display:inline; text-decoration:overline;">
+                                        <h6 class="text-center"></h6>
+                                    </div>
+                                    <div class="col-xs-3" style="display:inline; text-decoration:overline;">
+                                        <h6 class="text-center"><b> Admin Dept. </b></h6>
+                                    </div>
+                                    <div class="col-xs-3" style="display:inline; text-decoration:overline;">
+                                        <h6 class="text-center"><b> Security Check </b></h6>
+                                    </div>
+                                </div>
+                        </div>
+
+					</div>
+				</t>
+				</t>
+			</t>
+		</template>
+
+
+	</data>
+</odoo>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record id="email_notification_template_exit" model="mail.template">
+            <field name="name">Exit Interview Notification</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="subject">Exit Interview Notification</field>
+            <field name="body_html"><![CDATA[
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+                    <p>Dear ${object.name},</p>
+                    <b/>
+                    <p>You have been assigned to approve a Exit Interview.</p>
+                    <b/>
+                </div>
+                <div style="padding:0px;width:600px;margin:auto; margin-top: 10px; background: #fff repeat top /100%;color:#777777">
+                    <p style="font-size: 11px; margin-top: 10px;">
+                    <br></br>
+                    Your Family at
+                        <strong>${user.company_id.name}</strong>
+                    </p>
+                </div>]]>
+            </field>
+            <field name="user_signature" eval="False"/>
+        </record>
+
+</odoo>

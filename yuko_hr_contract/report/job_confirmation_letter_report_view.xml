@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+		<!-- Definition of the report -->
+		<report id="report_job_confirmation"
+				model="hr.contract"
+				string="Print Job Confirmation"
+				name="yuko_hr_contract.report_job_confirmation_letter_qweb"
+				file="yuko_hr_contract.report_job_confirmation_letter_qweb"
+				report_type="qweb-pdf"
+                menu="False"
+				paperformat="yuko_hr_contract.Yuko_pad_paperformat"
+        />
+
+		<!-- Main template -->
+		<template id="report_job_confirmation_letter_qweb">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+				<t t-name="report.external_layout">
+					<div class="page">
+					<br/>
+						<div class="text-left">
+							<b><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/></b>
+							<br/><br/>
+							<span t-field="o.employee_id.name"/><br/>
+							<span t-field="o.job_id"/><br/>
+							<span t-field="o.department_id.name"/>
+						</div>
+						<br/><br/><br/>
+
+						<b> Sub: Letter of Job Confirmation after probation period. </b><br/><br/><br/>
+
+						<p>Dear  <span t-field="o.employee_id.name"/>, </p>
+
+						<p>Following completion of your probation period form <span t-field="o.trial_date_start"/> to <span t-field="o.trial_date_end"/> at Yuko Leather Goods Ltd. We have reviewed your performance and found the same to be satisfactory.</p>
+
+						<p>In view of the above, we are pleased to inform you that you have been confirmed to the position of <span t-field="o.job_id"/> at Yuko Leather Goods Ltd. will effective from date mentioned in new contract attached with this letter. Your basic salary has been revised to <span t-field="o.wage"/> BDT per month, will effect from your confirmation date and other benefits will be entertain based on basic salary.</p>
+
+						<p>Your salary will be reviews every 12 months and will be increases based upon satisfactory performance in the position.</p>
+
+						<p>All other terms and conditions of your appointment will remain the same. Please signify your acceptance of these terms and conditions by signing the new agreement attached with this letter &amp; return to Human Resource Dept. at an earliest convenient time.</p>
+
+						<p>In case you have any queries, do not hesitate to reach our Human Resource Officer / Department Supervisor. Yuko Leather Goods Ltd.</p>
+						<br/>
+						<p><b>Congratulates! This is your confirmation letter and wishes you well in your position.</b></p>
+						<br/><br/>
+
+
+						Sincerely,
+
+						<p><span t-raw="user.signature"/></p>
+
+
+						<p style="margin-top: 15%; text-decoration: underline;"><b>Attached Contract Documents: </b></p>
+						<p>Job Responsibility &amp; Timing</p>
+						<p>Salary</p>
+						<p>Advantages</p>
+						<p>Terms &amp; Condition</p>
+
+					</div>
+				</t>
+				</t>
+			</t>
+		</template>
+
+
+	</data>
+</odoo>

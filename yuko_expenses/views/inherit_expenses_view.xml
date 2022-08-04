@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<data>
+
+		<!-- Invisible menu for Expenses to Submit -->
+
+        <record id="make_invisible_expenses_submit" model="res.groups">
+			<field name="name">Invisible menu for expenses to submit</field>
+		</record>
+
+        <record id="hr_expense.menu_hr_expense_my_expenses_to_submit" model="ir.ui.menu">
+			<field name="groups_id" eval="[(6,0,[ref('make_invisible_expenses_submit')])]" />
+		</record>
+
+		<menuitem id="hr_expense.menu_hr_expense_sheet_my_reports" name="Expenses" sequence="3" parent="hr_expense.menu_hr_expense_my_expenses" action="hr_expense.action_hr_expense_sheet_my_all" load_xmlid="True"/>
+
+		<!-- Form View-->
+		<record id="inherit_view_hr_expense_sheet_form" model="ir.ui.view">
+			<field name="name">hr.expense.sheet.form</field>
+            <field name="model">hr.expense.sheet</field>
+			<field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//header/button[@name='approve_expense_sheets']" position="before">
+					<button string="Confirm" name="action_confirm" states="draft" type="object" class="oe_highlight"/>
+                </xpath>
+			</field>
+		</record>
+
+	</data>
+</odoo>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+		<!-- Definition of the report -->
+		<report id="report_job_offer"
+				model="hr.applicant"
+				string="Print Job Offer"
+				name="hr_appointment_report.report_job_offer_letter_qweb"
+				file="hr_appointment_report.report_job_offer_letter_qweb"
+				report_type="qweb-pdf"
+                menu="False"
+        />
+
+		<!-- Main template -->
+		<template id="report_job_offer_letter_qweb">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+				<t t-call="yuko_report_layout.external_layout">
+					<div class="page">
+					<br/>
+						<div class="text-left">
+							<b><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/></b>
+							<br/>
+							<span t-field="o.partner_name"/><br/>
+							<span t-field="o.applicant_address"/>
+						</div>
+						<br/><br/><br/>
+
+						<b> Sub: Job Offer Letter. </b><br/><br/><br/>
+
+						<p>Dear  <span t-field="o.partner_name"/>, </p>
+
+
+						<p>Yuko Leather Goods Ltd. is pleased to offer you a job as a <span t-field="o.job_id"/>(<span t-field="o.department_id"/>). We believe that your knowledge, skills and experience will be among our most valuable assets.
+							If you accept this job offer as per company policy you will be eligible to receive the following benefits beginning on your hire date.</p>
+						<p style="padding-left: 50px;"><b>Salary</b>: Monthly Basic starting salary 60 % of <span t-field="o.salary_proposed"/> your gross salary and followings are the others benefit you are avail to get from Yuko Leather Goods Ltd.<br/>
+       					<b>Others Benefit</b>: <span t-field="o.salary_proposed_extra"/> </p>
+						<p><b>To accept this job offer please:</b></p>
+						<p style="padding-left: 50px;"><i class="fa fa-circle-o"></i>  Sign and date this job offer letter where indicated below.</p>
+						<p style="padding-left: 50px;"><i class="fa fa-circle-o"></i>  Sign and date the enclosed Non-Compete Agreement where indicated.</p>
+						<p style="padding-left: 50px;"><i class="fa fa-circle-o"></i>  Sign and date the enclosed Confidentiality Agreement where indicated.</p>
+						<p style="padding-left: 50px;"><i class="fa fa-circle-o"></i>  Sign and date the enclosed At-Will Employment Confirmation where indicated.</p>
+						<p style="padding-left: 50px;"><i class="fa fa-circle-o"></i>  Mail all pages of the signed and dated documents listed above back to us in the enclosed business-reply envelope,
+							to arrive at us within 5 days Keep a copy of each document is enclosed for your records.</p>
+						<p style="padding-left: 50px;"><i class="fa fa-circle-o"></i>  Attend new-hire orientation on <span t-field="o.date_action"/> beginning at 8.00am sharp.</p>
+						<p style="padding-left: 50px;"><i class="fa fa-circle-o"></i>  Your next meeting with our Hr Team will be <span t-field="o.date_action"/> </p>
+						<p style="padding-left: 50px;"><i class="fa fa-circle-o"></i>  If you accept this job offer, your joining date will be <span t-field="o.joining_date"/> after your Meeting.</p>
+						<p style="padding-left: 50px;"><i class="fa fa-circle-o"></i>  Plan to work for the remainder of the business day after new-hire orientation ends. Please read the enclosed materials for complete,
+							new-hire instructions and more information about the benefits that Yuko Leather Goods Ltd. offers.</p>
+						<br/>
+						<p><b>To decline this job offer:</b></p>
+						<p style="padding-left: 50px;"><i class="fa fa-circle-o"></i>  Sign and date this job offer letter where indicated below.</p>
+						<p style="padding-left: 50px;"><i class="fa fa-circle-o"></i>  Mail all pages of this job offer letter back to us in the enclosed business-reply envelope, to arrive by within next 5 days.</p>
+						<br/>
+						<p style="page-break-after:always"></p>
+						<p>We at Yuko Leather Goods Ltd. hope that you will accept this job offer and look forward to welcome you.  Feel free to ask your queries to Human Resource Dept.  if you have questions or concerns.
+							Call the main number in the letterhead above during normal business hours and ask to speak with Human Resource Dept.</p>
+
+
+
+
+						Sincerely,
+						<p><span t-raw="user.signature"/></p>
+						<br/>
+						<p><b>Accept Job Offer:</b></p>
+						<p style="margin-bottom: 45px;">By signing and dating this letter below, I, <span t-field="o.partner_name"/>, accepted the job offer of <span t-field="o.job_id"/> by Yuko Leather Goods Ltd.</p>
+						<p>Signature: _________________________________ Date: _____________</p>
+						<p style="margin-bottom: 35px;"><b>Decline Job Offer: </b></p>
+						<p style="margin-bottom: 45px;">By signing and dating this letter below, I, <span t-field="o.partner_name"/>, declined the job offer of <span t-field="o.job_id"/> by Yuko Leather Goods Ltd.</p>
+						<p>Signature: _________________________________ Date: _____________</p>
+
+					</div>
+				</t>
+				</t>
+			</t>
+		</template>
+
+
+	</data>
+</odoo>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+    	
+    	<!-- Recruitment -->
+    	
+    	<menuitem
+        name="Recruitment"
+        id="hr_recruitment.menu_hr_recruitment_root"
+        web_icon="hr_recruitment,static/description/icon.png"
+        groups="hr_recruitment.group_hr_recruitment_user,yuko_hr.group_hr_recruitment_head"
+        sequence="80"/>
+
+        <!--
+        <menuitem parent="hr_recruitment.menu_hr_recruitment_root" id="hr_recruitment.menu_hr_job_position" action="hr_recruitment.action_hr_job" sequence="1"
+                  groups="hr_recruitment.group_hr_recruitment_manager,yuko_hr.group_hr_recruitment_head"/>
+        <menuitem parent="hr_recruitment.menu_hr_recruitment_configuration" id="hr_recruitment.menu_hr_job_position_config" action="hr_recruitment.action_hr_job_config"
+                  sequence="10" groups="hr_recruitment.group_hr_recruitment_user,yuko_hr.group_hr_recruitment_head"/>
+
+        <menuitem
+        name="Applications"
+        parent="hr_recruitment.menu_hr_recruitment_root"
+        id="hr_recruitment.menu_crm_case_categ0_act_job" action="hr_recruitment.crm_case_categ0_act_job" sequence="2"
+        groups="base.group_no_one,yuko_hr.group_hr_recruitment_head"/>
+
+
+        <menuitem name="Resumes and Letters" parent="hr_recruitment.menu_hr_recruitment_root" id="hr_recruitment.menu_crm_case_categ0_act_job02"
+                  action="hr_recruitment.hr_applicant_resumes" sequence="3" groups="hr_recruitment.group_hr_recruitment_user,yuko_hr.group_hr_recruitment_head"/>
+
+        -->
+
+        <!-- PAYROLL/Reports -->
+
+        <menuitem name="Reports" id="hr_payslip_monthly_report.menu_hr_payslip_reports" parent="hr_payroll.menu_hr_payroll_root"/>
+
+        <menuitem id="hr_payslip_monthly_report.menu_hr_payslip_view_report" name="Payslip Report"
+                  parent="l10n_in_hr_payroll.menu_l10n_in_hr_payroll_report" action="hr_payslip_monthly_report.action_hr_payslip_view_report"
+                  groups="hr.group_hr_manager" sequence="10"/>
+
+        <menuitem
+            id="hr.menu_hr_reporting_timesheet"
+            name="Reports"
+            parent="hr.menu_hr_root"
+            groups="hr.group_hr_manager,hr.group_hr_user,base.group_user"
+            sequence="99"/>
+
+        <menuitem id="gbs_hr_payroll.menu_pf_report" name="PF Report"
+                  parent="hr.menu_hr_reporting_timesheet" action="gbs_hr_payroll.action_provident_fund_wizard"
+                  groups="hr.group_hr_manager,hr.group_hr_user,base.group_user" sequence="11"/>
+
+
+
+    </data>
+</openerp>
